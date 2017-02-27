@@ -24,6 +24,7 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
     private PatrolTaskItemAdapter mPatrolTaskItemAdapter;
 
 
+
     public static Intent newIntent(Context context, int patrolTaskId) {
         Intent intent = new Intent(context, PatrolContentActivity.class);
         intent.putExtra(PATROLTASK_ID, patrolTaskId);
