@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="eventHandler"
+            type="com.campussecurity.app.patrol.PatrolContentActivity"/>
+
+        <variable
+            name="model"
+            type="com.campussecurity.app.patrol.model.PatrolTaskDetails"/>
+        <import type="java.lang.String"/>
+
+    </data>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/windowBackground"
+        tools:context="com.campussecurity.app.patrol.PatrolContentActivity"
+        >
+
+        <LinearLayout
+            android:id="@+id/activity_patrol_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <com.hao.common.widget.titlebar.TitleBar
+                android:id="@+id/titlebar"
+                style="@style/TitleBar"
+                />
+
+            <com.hao.common.widget.LoadingLayout
+                android:id="@+id/loading_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/margin_10"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:paddingTop="@dimen/margin_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@{model.name}"
+                            android:textSize="@dimen/margin_18"
+                            tools:text="巡逻路线A"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@{model.type==0?@string/str_day_patrol:(model.type==1?@string/str_temporary_patrol:@string/str_emergency_patrol)}"
+                            android:textColor="@{model.type==0?@color/colorPatrolGreen:(model.type==1?@color/colorPatrolYellow:@color/colorPatrolRed)}"
+                            android:textSize="@dimen/margin_18"
+                            tools:text="日常巡逻"
+                            tools:textColor="@color/colorPatrolGreen"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="@{@string/patrol_time+model.time}"
+                                tools:text="规定时间：9:00-10:00"
+                                tools:textColor="@color/colorPatrolGreen"
+                                />
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                tools:text="当前状态：已经到达西门口"
+                                android:text="@{model.state==0?@string/pre_start_patrol_state:(model.type==1?@string/start_patrol:@string/patrol_complete)}"
+                                tools:textColor="@color/colorPatrolGreen"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+            </com.hao.common.widget.LoadingLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</layout>
+

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/common_primary_bg"
+                android:padding="@dimen/margin_20"
+    >
+
+
+    <ImageView
+        android:id="@+id/iamgeView"
+        android:layout_width="@dimen/margin_80"
+        android:layout_height="@dimen/margin_80"
+        />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iamgeView"
+        android:textSize="@dimen/margin_16"
+        tools:text="李老师"
+        />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvName"
+        android:layout_toRightOf="@id/tvName"
+        android:paddingLeft="@dimen/margin_10"
+        android:paddingRight="@dimen/margin_10"
+        tools:text="2017-02-15 18:06"
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        tools:text="未处理"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_toRightOf="@id/iamgeView"
+        tools:text="2栋201走廊灯坏啦，请及时修好"
+        />
+
+</RelativeLayout>

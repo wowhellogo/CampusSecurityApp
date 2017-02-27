@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.bingoogolapple.badgeview.BGABadgeLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchWrap.Vertical"
+    android:background="@drawable/common_primary_bg"
+    android:gravity="center"
+    android:padding="10dp"
+    android:paddingTop="@dimen/margin_20"
+    app:badge_dragExtra="12dp"
+    app:badge_horizontalMargin="10dp"
+    app:badge_padding="6dp">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <cn.bingoogolapple.badgeview.BGABadgeImageView
+            android:id="@+id/im_icon_bg"
+            style="@style/WrapWrap"
+            android:padding="7dp"
+            app:badge_gravity="rightTop"
+            app:badge_horizontalMargin="20dp"
+            app:badge_verticalMargin="20dp"
+            tools:src="@mipmap/ic_grid_message_history_bg"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="@dimen/margin_5"
+            android:drawableTop="@mipmap/ic_grid_message_history"
+            android:orientation="vertical"
+            android:textColor="@color/colorLoginHintText"
+            android:textSize="@dimen/text_size_24"
+            tools:text="历史纪录"
+            >
+        </TextView>
+
+    </FrameLayout>
+</cn.bingoogolapple.badgeview.BGABadgeLinearLayout>

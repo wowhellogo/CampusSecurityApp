@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">校园安全系统</string>
+    <string name="title_activity_login">校园安全-登录</string>
+    <string name="title_activity_patrol_task">巡逻任务</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">请输入用户名</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="action_sign_in">立即登录</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_home_activity">首页</string>
+    <string name="act_destroy">注销</string>
+
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_content">校园安全系统</string>
+    <string name="tip_user_not_null">用户名不能为空</string>
+    <string name="tip_password_not_null">密码不能为空</string>
+    <string name="str_day_patrol">每日巡逻</string>
+    <string name="str_temporary_patrol">临时巡逻</string>
+    <string name="str_emergency_patrol">紧急巡逻</string>
+    <string name="patrol_time">规定时间：</string>
+    <string name="pre_start_patrol_state">当前状态：未开始</string>
+    <string name="start_patrol">当前状态：处理中</string>
+    <string name="patrol_complete">当前状态：已完成</string>
+</resources>
