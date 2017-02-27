@@ -11,6 +11,7 @@
         <variable
             name="model"
             type="com.campussecurity.app.patrol.model.PatrolTaskDetails"/>
+
         <import type="java.lang.String"/>
 
     </data>
@@ -100,12 +101,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
-                                tools:text="当前状态：已经到达西门口"
                                 android:text="@{model.state==0?@string/pre_start_patrol_state:(model.type==1?@string/start_patrol:@string/patrol_complete)}"
+                                tools:text="当前状态：已经到达西门口"
                                 tools:textColor="@color/colorPatrolGreen"/>
                         </LinearLayout>
 
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_2"
+                        android:gravity="center"
+                        android:text="左滑可以进行刷卡哦"
+                        android:background="@color/colorTip"
+                        />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view"

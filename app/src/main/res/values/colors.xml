@@ -12,6 +12,7 @@
     <color name="colorPatrolRed">#F8515F</color>
     <color name="colorPatrolYellow">#F1B393</color>
     <color name="colorPatrolGreen">#68C547</color>
+    <color name="colorTip">#f7e9e1</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>
