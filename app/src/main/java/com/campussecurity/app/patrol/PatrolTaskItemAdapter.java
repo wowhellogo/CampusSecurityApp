@@ -30,6 +30,12 @@ public class PatrolTaskItemAdapter extends BaseRecyclerViewAdapter<PatrolTaskIte
 
     @Override
     protected void fillData(BaseViewHolderHelper helper, int position, PatrolTaskItemBean model) {
+        if (position == 0) {
+            helper.setText(R.id.tvName, model.getName() + "开始");
+        } else if (position == (getItemCount() - 1)) {
+            helper.setText(R.id.tvName, model.getName() + "结束");
+        }
+        helper.setText(R.id.tvName, model.getName() + "");
 
     }
 }

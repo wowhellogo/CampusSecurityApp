@@ -3,6 +3,7 @@ package com.campussecurity.app.patrol;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 
 import com.campussecurity.app.R;
 import com.campussecurity.app.databinding.ActivityPatrolContentBinding;
@@ -11,6 +12,7 @@ import com.hao.common.base.BaseDataBindingActivity;
 import com.hao.common.nucleus.factory.RequiresPresenter;
 import com.hao.common.nucleus.view.loadview.ILoadDataView;
 import com.hao.common.utils.ToastUtil;
+import com.hao.common.utils.ViewUtils;
 import com.hao.common.widget.LoadingLayout;
 import com.orhanobut.logger.Logger;
 
@@ -18,6 +20,8 @@ import com.orhanobut.logger.Logger;
 public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContentPresenter, ActivityPatrolContentBinding> implements ILoadDataView<PatrolTaskDetails> {
     private final static String PATROLTASK_ID = "patrolTaskId";
     private int patrolTaskId;
+    private RecyclerView mRecyclerView;
+    private PatrolTaskItemAdapter mPatrolTaskItemAdapter;
 
 
     public static Intent newIntent(Context context, int patrolTaskId) {
@@ -33,6 +37,10 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        mRecyclerView = getViewById(R.id.recycler_view);
+        ViewUtils.initVerticalLinearRecyclerView(this,mRecyclerView);
+        mPatrolTaskItemAdapter = new PatrolTaskItemAdapter(mRecyclerView);
+        mRecyclerView.setAdapter(mPatrolTaskItemAdapter);
     }
 
     @Override
@@ -52,7 +60,7 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
     public void loadDataToUI(PatrolTaskDetails patrolTaskDetails) {
         Logger.e(patrolTaskDetails.toString());
         mBinding.setModel(patrolTaskDetails);
-
+        mPatrolTaskItemAdapter.setData(patrolTaskDetails.getItems());
     }
 
 
