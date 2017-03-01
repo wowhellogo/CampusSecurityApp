@@ -29,4 +29,25 @@
     <string name="pre_start_patrol_state">当前状态：未开始</string>
     <string name="start_patrol">当前状态：处理中</string>
     <string name="patrol_complete">当前状态：已完成</string>
+
+
+    
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="bt_read">读卡 </string>
+    <string name="stop_read">停止读卡 </string>
+    <string name="bt_write">写卡 </string>
+    <string name="tx_read">读取的内容如下 :</string>
+
+    <string name="tx_name">写卡命令 :</string>
+    <string name="tx_sex">性别 :</string>
+    <string name="tx_age">年龄 :</string>
+    <string name="tx_address">地址 :</string>
+    <string name="tips">请至少输入上面中的一项！</string>
+
+    <string name="tips_noread">没有读到内容！</string>
+    <string name="txt_name">小明</string>
+    <string name="txt_sex">女</string>
+    <string name="txt_age">20</string>
+    <string name="txt_address">深圳XXXX</string>
 </resources>

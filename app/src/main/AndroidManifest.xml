@@ -76,6 +76,12 @@
             android:screenOrientation="portrait"
             >
         </activity>
+
+        <activity
+            android:name=".rfidjni.MainRFIDActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

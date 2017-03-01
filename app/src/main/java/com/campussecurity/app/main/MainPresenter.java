@@ -7,6 +7,7 @@ import com.campussecurity.app.main.model.IconModel;
 import com.campussecurity.app.message.SystemMessageActivity;
 import com.campussecurity.app.patrol.PatrolListActivity;
 import com.campussecurity.app.record.HistoryRecordActivity;
+import com.campussecurity.app.rfidjni.MainRFIDActivity;
 import com.campussecurity.app.securitycheck.SecurityCheckListActivity;
 import com.hao.common.nucleus.presenter.RxPresenter;
 
@@ -80,6 +81,14 @@ public class MainPresenter extends RxPresenter<MainActivity> {
                 .setIcon(R.mipmap.ic_grid_message_history)
                 .setIconBg(R.mipmap.ic_grid_message_history_bg)
                 .setToActivity(HistoryRecordActivity.class)
+                .builder()
+        );
+
+        list.add(new IconModel.Builder()
+                .setName("刷卡测试")
+                .setIcon(R.mipmap.ic_grid_system_message)
+                .setIconBg(R.mipmap.ic_grid_system_message_bg)
+                .setToActivity(MainRFIDActivity.class)
                 .builder()
         );
         return list;

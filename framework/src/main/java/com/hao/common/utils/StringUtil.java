@@ -53,6 +53,10 @@ public class StringUtil {
         return isEmpty(editText.getText().toString().trim());
     }
 
+    public static String getEditTextStr(EditText editText){
+        return editText.getText().toString().trim();
+    }
+
     /**
      * 比较两个字符串是否相等
      *
