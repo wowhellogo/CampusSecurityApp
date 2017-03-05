@@ -1,30 +1,53 @@
 package com.campussecurity.app.securitycheck;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.campussecurity.app.R;
-import com.hao.common.base.BaseActivity;
+import com.hao.common.base.BaseLoadActivity;
+import com.hao.common.base.TopBarType;
+import com.hao.common.nucleus.factory.RequiresPresenter;
 
-
-public class SecurityCheckListActivity extends BaseActivity {
+@RequiresPresenter(SecurityCheckPresenter.class)
+public class SecurityCheckListActivity extends BaseLoadActivity<SecurityCheckPresenter, SecurityTaskModel> {
 
     @Override
-    protected int getRootLayoutResID() {
-        return R.layout.activity_security_check_list;
+    protected TopBarType getTopBarType() {
+        return TopBarType.TitleBar;
     }
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
+        setTitle(getString(R.string.title_security_check_list));
+        mTitleBar.setRightDrawable(getResources().getDrawable(R.mipmap.ic_add));
+    }
+
+    @Override
+    public void onClickLeftCtv() {
+        mSwipeBackHelper.backward();
+    }
+
+
+    @Override
+    public void onClickRightCtv() {
 
     }
 
     @Override
-    protected void setListener() {
-
+    public void onReload(View v) {
+        super.onReload(v);
+        ((SecurityCheckPresenter) getPresenter()).loadSecurityTaskList();
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void onRefresh() {
+        ((SecurityCheckPresenter) getPresenter()).loadSecurityTaskList();
+    }
 
+
+    @Override
+    protected void createAdapter() {
+        mAdapter = new SecurityCheckAdapter(mRecyclerView, R.layout.item_security_check_list);
     }
 }

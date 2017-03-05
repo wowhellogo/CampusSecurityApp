@@ -4,6 +4,7 @@ import com.campussecurity.app.BuildConfig;
 import com.campussecurity.app.login.model.User;
 import com.campussecurity.app.patrol.model.PatrolTask;
 import com.campussecurity.app.patrol.model.PatrolTaskDetails;
+import com.campussecurity.app.securitycheck.SecurityTaskModel;
 import com.hao.common.net.AbRestNetDataSource;
 import com.hao.common.net.result.RESTResult;
 
@@ -28,12 +29,9 @@ public class RestDataSoure extends AbRestNetDataSource {
 
     @Override
     public void newRequest() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.DEBUG ? API.DEBUG_URL : API.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())//使用Gson作为数据转换器
+        retrofit = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG ? API.DEBUG_URL : API.BASE_URL).addConverterFactory(GsonConverterFactory.create())//使用Gson作为数据转换器
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//使用RxJava作为回调适配器
-                .client(okHttpClient)
-                .build();
+                .client(okHttpClient).build();
         api = retrofit.create(API.class);
     }
 
@@ -52,9 +50,13 @@ public class RestDataSoure extends AbRestNetDataSource {
     }
 
     //刷卡
-    public Observable<RESTResult> scanCard(String accountGuid, int patrolTaskId,
-                                    int patrolTaskItemId, String code) {
+    public Observable<RESTResult> scanCard(String accountGuid, int patrolTaskId, int patrolTaskItemId, String code) {
         return api.scanCard(accountGuid, patrolTaskId, patrolTaskItemId, code);
+    }
+
+    //得到安全检查列表
+    public Observable<RESTResult<SecurityTaskModel>> getSecurityTaskList(String accountGuid) {
+        return api.getSecurityTaskList(accountGuid);
     }
 
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campussecurity.app.R;
+import com.example.android.rfidjni.Native;
 
 
 public class MainRFIDActivity extends Activity implements OnClickListener{

@@ -24,6 +24,7 @@
             />
 
         <ImageView
+            android:id="@+id/im_flag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -68,15 +69,18 @@
 
 
                 <TextView
+                    android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxWidth="@dimen/margin_100"
                     android:singleLine="true"
                     android:text="东门口"
                     android:textSize="@dimen/text_size_16"
                     />
 
                 <TextView
+                    android:id="@+id/tv_time_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

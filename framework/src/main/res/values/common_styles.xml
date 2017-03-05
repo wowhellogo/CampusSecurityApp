@@ -172,7 +172,7 @@
         <item name="bgatitlebar_titleTextSize">@dimen/text_size_18</item>
         <item name="bgatitlebar_leftAndRightPadding">@dimen/size_level2</item>
         <item name="bgatitlebar_titleDrawablePadding">@dimen/size_level1</item>
-        <!--<item name="bgatitlebar_leftDrawable">@drawable/md_nav_back</item>-->
+        <item name="bgatitlebar_leftDrawable">@drawable/md_nav_back</item>
     </style>
 
 

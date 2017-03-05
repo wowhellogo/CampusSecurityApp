@@ -1,6 +1,7 @@
 package com.hao.common.net;
 import com.hao.common.utils.NetWorkUtil;
 import com.hao.common.utils.StorageUtil;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,7 @@ public abstract class AbRestNetDataSource {
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();//获取请求
             HttpUrl httpUrl = request.url();
+            Logger.e(httpUrl.toString());
             //这里就是说判读我们的网络条件，要是有网络的话就直接获取网络上面的数据，要是没有网络的话就去缓存里面取数据
             if(NetWorkUtil.isNetworkAvailable()){
                 request = request.newBuilder()

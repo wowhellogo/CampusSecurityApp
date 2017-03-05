@@ -5,13 +5,11 @@ import com.hao.common.exception.NotDataListException;
 import com.hao.common.exception.NotFoundDataException;
 import com.hao.common.nucleus.view.loadview.ILoadDataView;
 import com.hao.common.nucleus.view.loadview.ILoadPageListDataView;
-import com.hao.common.nucleus.view.loadview.LoadPageListDataView;
 import com.hao.common.rx.RxUtil;
 
 import java.util.List;
 
 import rx.Observable;
-import rx.functions.Action0;
 import rx.functions.Action2;
 import rx.functions.Func0;
 
@@ -100,6 +98,9 @@ public class LoadPresenter extends RxPresenter {
 
         @Override
         public void call(View view, List<Model> models) {
+            if (isShowing) {
+                view.showContentView();
+            }
             if (isRefresh()) {
                 view.onRefreshDataToUI(models);
                 view.onRefreshComplete();

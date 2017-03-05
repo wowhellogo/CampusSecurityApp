@@ -3,6 +3,7 @@ package com.campussecurity.app.net;
 import com.campussecurity.app.login.model.User;
 import com.campussecurity.app.patrol.model.PatrolTask;
 import com.campussecurity.app.patrol.model.PatrolTaskDetails;
+import com.campussecurity.app.securitycheck.SecurityTaskModel;
 import com.hao.common.net.result.RESTResult;
 
 import retrofit2.http.Field;
@@ -40,4 +41,7 @@ public interface API {
     @POST("/api/ScanCard")
     Observable<RESTResult> scanCard(@Field("accountGuid") String accountGuid, @Field("patrolTaskId") int patrolTaskId, @Field("patrolTaskItemId") int patrolTaskItemId, @Field("code") String code);
 
+    //得到安全检查
+    @GET("/api/SecurityTask")
+    Observable<RESTResult<SecurityTaskModel>> getSecurityTaskList(@Query("accountGuid") String accountGuid);
 }

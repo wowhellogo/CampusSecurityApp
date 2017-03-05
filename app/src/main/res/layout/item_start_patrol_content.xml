@@ -24,6 +24,7 @@
             />
 
         <ImageView
+            android:id="@+id/im_flag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_active_point"
@@ -66,6 +67,7 @@
                 />
 
             <TextView
+                android:id="@+id/tv_time_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

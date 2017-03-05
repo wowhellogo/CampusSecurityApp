@@ -27,6 +27,23 @@ public class PatrolTask implements Serializable {
      * updateDate : 2017-02-17 17.36.15
      */
 
+    /*
+    * {
+    "patrolTaskId": 1,
+    "patrolTypeId": 1,
+    "schoolId": 1,
+    "accountGuid": "77b3d076-05a4-4aa9-9ddb-69823a107e9f",
+    "name": "每天巡检",
+    "patrols": "",
+    "startTime": "01:00",
+    "endTime": "23:00",
+    "type": 0,
+    "state": 0,
+    "createDate": "2017-02-17 05:36:15",
+    "updateDate": "2017-02-17 05:36:15"
+}
+    * */
+
     private int patrolTaskId;
     private int patrolTypeId;
     private int schoolId;
