@@ -3,7 +3,9 @@ package com.campussecurity.app.patrol;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.campussecurity.app.R;
 import com.campussecurity.app.databinding.ActivityPatrolContentBinding;
@@ -11,18 +13,21 @@ import com.campussecurity.app.patrol.model.PatrolTaskDetails;
 import com.hao.common.base.BaseDataBindingActivity;
 import com.hao.common.nucleus.factory.RequiresPresenter;
 import com.hao.common.nucleus.view.loadview.ILoadDataView;
+import com.hao.common.utils.SPUtil;
 import com.hao.common.utils.ToastUtil;
 import com.hao.common.utils.ViewUtils;
 import com.hao.common.widget.LoadingLayout;
 import com.orhanobut.logger.Logger;
 
 @RequiresPresenter(PatrolContentPresenter.class)
-public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContentPresenter, ActivityPatrolContentBinding> implements ILoadDataView<PatrolTaskDetails> {
+public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContentPresenter, ActivityPatrolContentBinding> implements ILoadDataView<PatrolTaskDetails>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, LoadingLayout.OnReloadListener {
     private final static String PATROLTASK_ID = "patrolTaskId";
     private int patrolTaskId;
     private RecyclerView mRecyclerView;
     private PatrolTaskItemAdapter mPatrolTaskItemAdapter;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private LoadingLayout mLoadingLayout;
+    private View tip;
 
 
     public static Intent newIntent(Context context, int patrolTaskId) {
@@ -38,15 +43,31 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        setTitle(getString(R.string.title_patrol_contnet_activity));
         mRecyclerView = getViewById(R.id.recycler_view);
-        ViewUtils.initVerticalLinearRecyclerView(this,mRecyclerView);
+        mSwipeRefreshLayout = getViewById(R.id.swipe_refresh_layout);
+        mLoadingLayout = getViewById(R.id.loading_layout);
+        tip = getViewById(R.id.tv_tip);
+        if (SPUtil.getBoolean("tipIsGone", false)) {
+            tip.setVisibility(View.GONE);
+        } else {
+            tip.setVisibility(View.VISIBLE);
+        }
+        ViewUtils.initVerticalLinearRecyclerView(this, mRecyclerView);
         mPatrolTaskItemAdapter = new PatrolTaskItemAdapter(mRecyclerView);
         mRecyclerView.setAdapter(mPatrolTaskItemAdapter);
     }
 
     @Override
     protected void setListener() {
+        tip.setOnClickListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mLoadingLayout.setOnReloadListener(this);
+    }
 
+    @Override
+    public void onClickLeftCtv() {
+        mSwipeBackHelper.backward();
     }
 
     @Override
@@ -93,5 +114,25 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_tip:
+                SPUtil.putBoolean("tipIsGone", true);
+                tip.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        getPresenter().loadPatrolContent(patrolTaskId);
+    }
+
+    @Override
+    public void onReload(View v) {
+        getPresenter().loadPatrolContent(patrolTaskId);
     }
 }

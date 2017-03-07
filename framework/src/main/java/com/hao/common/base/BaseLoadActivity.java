@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hao.common.R;
-import com.hao.common.adapter.BaseBindingRecyclerViewAdapter;
 import com.hao.common.adapter.BaseDivider;
 import com.hao.common.adapter.BaseRecyclerViewAdapter;
 import com.hao.common.adapter.OnRVItemClickListener;
@@ -28,12 +27,12 @@ import java.util.List;
  * @日 期: 2017/3/5 0005
  */
 
-public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseActivity<LoadPresenter> implements ILoadPageListDataView<T>, SwipeRefreshLayout.OnRefreshListener, LoadingLayout.OnReloadListener, OnRVItemClickListener {
+public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseActivity<LoadPresenter> implements ILoadPageListDataView<T>,
+        SwipeRefreshLayout.OnRefreshListener, LoadingLayout.OnReloadListener, OnRVItemClickListener {
     protected LoadingLayout mLoadingLayout;
     protected RecyclerView mRecyclerView;
     protected SwipeRefreshLayout mRefreshLayout;
     protected BaseRecyclerViewAdapter<T> mAdapter;
-    protected BaseBindingRecyclerViewAdapter mBaseBindingRecyclerViewAdapter;
 
     @Override
     protected int getRootLayoutResID() {
@@ -48,7 +47,6 @@ public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseA
 
         ViewUtils.initVerticalLinearRecyclerView(this, mRecyclerView);
         createAdapter();
-        //mAdapter = new SecurityCheckAdapter(mRecyclerView, R.layout.item_security_check_list);
         mRecyclerView.addItemDecoration(BaseDivider.newBitmapDivider());
         mRecyclerView.setAdapter(mAdapter);
         showLoadingView();

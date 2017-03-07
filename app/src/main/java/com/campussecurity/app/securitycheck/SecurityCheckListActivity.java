@@ -8,8 +8,15 @@ import com.hao.common.base.BaseLoadActivity;
 import com.hao.common.base.TopBarType;
 import com.hao.common.nucleus.factory.RequiresPresenter;
 
+/**
+ *安全检查列表界面
+ */
 @RequiresPresenter(SecurityCheckPresenter.class)
 public class SecurityCheckListActivity extends BaseLoadActivity<SecurityCheckPresenter, SecurityTaskModel> {
+    @Override
+    protected void createAdapter() {
+        mAdapter = new SecurityCheckAdapter(mRecyclerView, R.layout.item_security_check_list);
+    }
 
     @Override
     protected TopBarType getTopBarType() {
@@ -45,9 +52,4 @@ public class SecurityCheckListActivity extends BaseLoadActivity<SecurityCheckPre
         ((SecurityCheckPresenter) getPresenter()).loadSecurityTaskList();
     }
 
-
-    @Override
-    protected void createAdapter() {
-        mAdapter = new SecurityCheckAdapter(mRecyclerView, R.layout.item_security_check_list);
-    }
 }

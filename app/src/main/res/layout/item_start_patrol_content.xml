@@ -6,14 +6,14 @@
               android:gravity="center_vertical"
               android:orientation="horizontal"
               android:paddingLeft="@dimen/margin_10"
-              android:paddingTop="@dimen/margin_10"
+
               tools:background="@color/windowBackground"
     >
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="20dp"
         android:layout_height="match_parent"
-
+        android:layout_marginTop="@dimen/margin_8"
         >
 
         <View
@@ -35,13 +35,15 @@
     <com.daimajia.swipe.SwipeLayout
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <TextView
             android:id="@+id/tv_operation"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/margin_50"
             android:layout_height="wrap_content"
             android:background="@color/colorPatrolGreen"
+            android:gravity="center"
             android:padding="@dimen/margin_10"
             android:text="刷卡"
             android:textColor="@android:color/white"
@@ -50,14 +52,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_10"
+            android:paddingBottom="@dimen/margin_15"
             android:paddingLeft="@dimen/margin_5"
-            android:paddingTop="@dimen/margin_5"
+            android:paddingTop="@dimen/margin_15"
             >
 
             <TextView
                 android:id="@+id/tvName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxWidth="@dimen/margin_100"
@@ -68,9 +70,11 @@
 
             <TextView
                 android:id="@+id/tv_time_state"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="@dimen/margin_10"
                 android:singleLine="true"
                 android:text="9：15  已经开始巡逻了"
                 android:textColor="@color/colorPatrolGreen"

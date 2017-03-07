@@ -16,30 +16,29 @@
 
     </data>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+    <LinearLayout
+        android:id="@+id/activity_patrol_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/windowBackground"
-        tools:context="com.campussecurity.app.patrol.PatrolContentActivity"
+        android:orientation="vertical"
         >
 
-        <LinearLayout
-            android:id="@+id/activity_patrol_content"
+        <com.hao.common.widget.titlebar.TitleBar
+            android:id="@+id/titlebar"
+            style="@style/TitleBar"
+            />
+
+        <com.hao.common.widget.LoadingLayout
+            android:id="@+id/loading_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:layout_height="match_parent">
 
-            <com.hao.common.widget.titlebar.TitleBar
-                android:id="@+id/titlebar"
-                style="@style/TitleBar"
-                />
-
-            <com.hao.common.widget.LoadingLayout
-                android:id="@+id/loading_layout"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/windowBackground"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,25 +107,34 @@
 
                     </LinearLayout>
 
+                    <View style="@style/HLine"/>
+
                     <TextView
+                        android:id="@+id/tv_tip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/margin_2"
-                        android:gravity="center"
-                        android:text="左滑可以进行刷卡哦"
                         android:background="@color/colorTip"
+                        android:drawableRight="@mipmap/ic_delete_outline"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_2"
+                        android:visibility="gone"
+                        android:text="左滑可以进行刷卡哦"
                         />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        />
                 </LinearLayout>
 
-            </com.hao.common.widget.LoadingLayout>
 
-        </LinearLayout>
+            </android.support.v4.widget.SwipeRefreshLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+
+        </com.hao.common.widget.LoadingLayout>
+
+    </LinearLayout>
+
 </layout>
 
