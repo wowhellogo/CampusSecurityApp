@@ -6,8 +6,7 @@
               android:gravity="center_vertical"
               android:orientation="horizontal"
               android:paddingLeft="@dimen/margin_10"
-
-              tools:background="@color/windowBackground"
+              android:background="@color/windowBackground"
     >
 
     <FrameLayout
@@ -38,20 +37,43 @@
         android:layout_height="wrap_content"
         >
 
-        <TextView
-            android:id="@+id/tv_operation"
-            android:layout_width="@dimen/margin_50"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorPatrolGreen"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:padding="@dimen/margin_10"
-            android:text="刷卡"
-            android:textColor="@android:color/white"
-            />
+            >
+            <TextView
+                android:id="@+id/tv_operation"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="刷卡"
+                android:paddingStart="@dimen/margin_20"
+                android:paddingEnd="@dimen/margin_20"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                />
+
+            <TextView
+                android:id="@+id/tv_operation_manageer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/margin_20"
+                android:paddingEnd="@dimen/margin_20"
+                android:text="选择安保人员"
+                android:background="@color/colorPatrolRed"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                />
+
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/root_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/common_window_back_ground_bg"
             android:paddingBottom="@dimen/margin_15"
             android:paddingLeft="@dimen/margin_5"
             android:paddingTop="@dimen/margin_15"
@@ -76,7 +98,7 @@
                 android:gravity="right"
                 android:paddingRight="@dimen/margin_10"
                 android:singleLine="true"
-                android:text="9：15  已经开始巡逻了"
+                tools:text="9：15  已经开始巡逻了"
                 android:textColor="@color/colorPatrolGreen"
                 android:textSize="@dimen/text_size_14"
                 />

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="eventHandler"
+            type="com.campussecurity.app.securitycheck.SecurityCheckDetailsActivity"/>
+
+        <variable
+            name="model"
+            type="com.campussecurity.app.securitycheck.SecurityCheckDetailModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <com.hao.common.widget.titlebar.TitleBar
+            android:id="@+id/titleBar"
+            style="@style/TitleBar"
+            app:bgatitlebar_titleText="检查项目详情"
+            />
+
+        <com.hao.common.widget.LoadingLayout
+            android:id="@+id/loading_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/windowBackground"
+            >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+
+                >
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/windowBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/margin_10">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:orientation="vertical"
+                            android:padding="@dimen/margin_10"
+                            >
+
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{model.author}"
+                                android:textSize="@dimen/text_size_18"
+                                tools:text="李老师"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/margin_10"
+                                android:paddingTop="@dimen/margin_10"
+                                android:text="@{model.description}"
+                                tools:text="sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                                />
+
+                            <com.hao.common.widget.BGASortableNinePhotoLayout
+                                android:id="@+id/sortable_nine_phone_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/margin_120"
+                                app:bga_snpl_itemSpanCount="4"
+                                app:bga_snpl_maxItemCount="4"
+                                app:bga_snpl_otherWhiteSpacing="@dimen/margin_0"
+                                app:bga_snpl_itemCornerRadius="@dimen/margin_5"
+                                />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:background="@android:color/white"
+                            android:padding="@dimen/margin_10"
+                            >
+
+                            <TextView
+                                android:id="@+id/tv_date_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/report_date"
+
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_date_title"
+                                android:paddingTop="@dimen/margin_10"
+                                android:text="@{model.createDate}"
+                                tools:text="2017-02-10 16:29"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_current_state_title"
+                                android:layout_width="@dimen/margin_150"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+
+                                android:text="@string/current_date"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_current_state"
+                                android:layout_width="@dimen/margin_150"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/tv_current_state_title"
+                                android:layout_marginTop="@dimen/margin_10"
+                                android:singleLine="true"
+                                android:text="@{model.state==0?@string/state_untreated:@string/state_processing}"
+
+                                />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:background="@android:color/white"
+                            android:orientation="vertical"
+                            android:padding="@dimen/margin_10"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/margin_5"
+                                android:text="说明"
+                                />
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:paddingTop="@dimen/margin_5"
+                                android:paddingBottom="@dimen/margin_5"
+                                android:background="@drawable/shape_gray_text_bg"
+                                >
+
+                                <EditText
+                                    android:id="@+id/ed_explain"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="120dp"
+                                    android:background="@null"
+                                    android:gravity="top"
+                                    tools:text="eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                                    android:inputType="textMultiLine"/>
+                            </FrameLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+                <FrameLayout
+                    android:id="@+id/ff_dispose"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_60"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/common_primary_bg"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_dispose"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_10"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:text="@string/btn_dispose"
+                        android:textColor="@android:color/white"
+                        />
+                </FrameLayout>
+            </FrameLayout>
+        </com.hao.common.widget.LoadingLayout>
+    </LinearLayout>
+
+
+</layout>

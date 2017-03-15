@@ -17,4 +17,6 @@ public class PatrolContentPresenter extends LoadPresenter {
     public void loadPatrolContent(int patrolTaskId) {
         loadModel(RestDataSoure.newInstance().getPatrolTaskDetails(patrolTaskId).compose(new RESTResultTransformerModel<PatrolTaskDetails>()));
     }
+
+
 }

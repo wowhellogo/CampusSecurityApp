@@ -15,4 +15,12 @@
     <color name="colorTip">#f7e9e1</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <!--图库 START-->
+    <color name="photo_activity_bg">#1A1A1A</color>
+    <color name="photo_title_bg">#303D42</color>
+    <color name="photo_send_enabled">#17C7D1</color>
+    <color name="photo_send_disabled">#8017C7D1</color>
+    <color name="photo_selected_color">#4D000000</color>
+    <!--图库 END-->
 </resources>

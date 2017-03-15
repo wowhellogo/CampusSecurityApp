@@ -57,4 +57,16 @@
     <string name="go_to_sign">转签</string>
     <string name="manage">处理</string>
     <string name="title_patrol_contnet_activity">巡逻任务</string>
+    <string name="patrol_start">:开始</string>
+    <string name="end_patrol">:结束</string>
+    <string name="scan_carding">刷卡中...</string>
+    <string name="scan_card_fail">刷卡失败</string>
+    <string name="report_date">上报时间:</string>
+    <string name="current_date">当前状态：</string>
+    <string name="btn_dispose">处理</string>
+    <string name="post_successful">提交成功</string>
+    <string name="title_process_list">安保人员</string>
+    <string name="str_select_processor">请选择要处理的安保人员</string>
+    <string name="title_add_security_check">提交安全检查</string>
+    <string name="btn_post">点击提交</string>
 </resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="viewHolder"
+            type="com.hao.common.adapter.BaseBindingViewHolder"/>
+
+        <variable
+            name="model"
+            type="com.campussecurity.app.securitycheck.ProcessorModel"/>
+
+        <variable
+            name="itemEventHandler"
+            type="com.campussecurity.app.securitycheck.ProcessorListActivity"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_primary_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:onClick="@{()->itemEventHandler.onItemClick(model)}"
+        android:padding="@dimen/margin_10"
+        >
+
+        <com.hao.common.widget.CircleImageView
+            android:layout_width="@dimen/margin_60"
+            android:layout_height="@dimen/margin_60"
+            app:path="@{model.avatar}"
+            tools:src="@color/adapter_divider"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_20">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{model.name}"
+                tools:text="林国定"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{model.userName}"
+                tools:text="15088138597"
+                android:id="@+id/textView2"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

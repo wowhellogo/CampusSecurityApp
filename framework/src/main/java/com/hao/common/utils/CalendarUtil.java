@@ -27,6 +27,7 @@ public class CalendarUtil {
     private static final SimpleDateFormat sHourMinuteSdf = new SimpleDateFormat("HH:mm", Locale.CHINESE);
     private static final SimpleDateFormat sMonthDayHourMinuteSdf = new SimpleDateFormat("MM/dd HH:mm", Locale.CHINESE);
     private static final SimpleDateFormat sYearMonthDayHourMinuteSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINESE);
+    private static final SimpleDateFormat sYearMonthDayHourMinuteSecondSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
     private static final SimpleDateFormat sYearMonthDaySdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
     private static final SimpleDateFormat sYearMonthDayWeekSlashSdf = new SimpleDateFormat("yyyy-MM-dd E", Locale.CHINESE);
     private static final SimpleDateFormat sYearMonthDayWeekSdf = new SimpleDateFormat("yyyy/MM/dd E", Locale.CHINESE);
@@ -244,6 +245,10 @@ public class CalendarUtil {
 
     public static String formatYearMonthDayHourMinute(Date date) {
         return sYearMonthDayHourMinuteSdf.format(date);
+    }
+
+    public static String formatYearMonthDayHourMinuteSecond(Date date) {
+        return sYearMonthDayHourMinuteSecondSdf.format(date);
     }
 
     public static String formatYearMonthDayHourMinute(long milliseconds) {

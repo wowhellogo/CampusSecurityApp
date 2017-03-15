@@ -1,7 +1,9 @@
 package com.campussecurity.app.securitycheck;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.campussecurity.app.R;
 import com.hao.common.base.BaseLoadActivity;
@@ -52,4 +54,9 @@ public class SecurityCheckListActivity extends BaseLoadActivity<SecurityCheckPre
         ((SecurityCheckPresenter) getPresenter()).loadSecurityTaskList();
     }
 
+    @Override
+    public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+        Intent intent=SecurityCheckDetailsActivity.newIntent(this,mAdapter.getItem(position).getSecurityTaskId()+"");
+        mSwipeBackHelper.forward(intent);
+    }
 }

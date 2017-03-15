@@ -329,7 +329,7 @@ public abstract class BaseActivity<P extends Presenter> extends NucleusRxAppComp
 
     @Override
     public void onClickLeftCtv() {
-
+        mSwipeBackHelper.backward();
     }
 
     @Override

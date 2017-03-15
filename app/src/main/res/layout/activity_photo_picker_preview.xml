@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/MatchMatch"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@color/photo_activity_bg"
+                android:clipToPadding="true"
+    >
+
+    <com.picker.view.HackyViewPager
+        android:id="@+id/content_hvp"
+        style="@style/MatchMatch"/>
+
+    <RelativeLayout
+        android:id="@+id/title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/photo_title_bg">
+
+        <ImageView
+            android:id="@+id/back_iv"
+            style="@style/WrapMatch"
+            android:paddingLeft="@dimen/size_level3"
+            android:paddingRight="@dimen/size_level3"
+            android:src="@mipmap/ic_back_white"/>
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/WrapMatch"
+            android:layout_toRightOf="@id/back_iv"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/titlebar_textSize"
+            tools:text="1/12"/>
+
+        <TextView
+            android:id="@+id/submit_tv"
+            style="@style/WrapMatch"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/size_level2"
+            android:background="@drawable/selector_btn_photo_send"
+            android:clickable="true"
+            android:gravity="center"
+            android:minWidth="80dp"
+            android:paddingLeft="@dimen/size_level2"
+            android:paddingRight="@dimen/size_level2"
+            android:singleLine="true"
+            android:text="@string/confirm"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_left_right_textSize"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/choose_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/photo_title_bg">
+
+        <TextView
+            android:id="@+id/choose_tv"
+            style="@style/WrapMatch"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size_level2"
+            android:clickable="true"
+            android:drawableLeft="@mipmap/ic_cb_normal"
+            android:drawablePadding="@dimen/size_level1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_level2"
+            android:paddingRight="@dimen/size_level2"
+            android:text="@string/choose"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_left_right_textSize"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -10,7 +10,6 @@ import java.util.List;
  */
 
 public class SecurityTaskModel {
-
     /**
      * pictrues : []
      * securityTaskId : 1
@@ -51,7 +50,12 @@ public class SecurityTaskModel {
     private String endTime;
     private String createDate;
     private String updateDate;
-    private List<String> pictrues;
+    private List<PictureModel> pictrues;
+
+    public class PictureModel{
+        public String securityTaskItemId;
+        public String picture;
+    }
 
     public int getSecurityTaskId() {
         return securityTaskId;
@@ -197,11 +201,11 @@ public class SecurityTaskModel {
         this.updateDate = updateDate;
     }
 
-    public List<String> getPictrues() {
+    public List<PictureModel> getPictrues() {
         return pictrues;
     }
 
-    public void setPictrues(List<String> pictrues) {
+    public void setPictrues(List<PictureModel> pictrues) {
         this.pictrues = pictrues;
     }
 }

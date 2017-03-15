@@ -154,7 +154,7 @@ public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseA
 
     @Override
     public void onRefresh() {
-
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override

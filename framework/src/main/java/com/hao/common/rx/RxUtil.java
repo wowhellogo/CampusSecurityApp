@@ -31,7 +31,13 @@ public class RxUtil {
     }
 
     public static <T> Observable.Transformer<T, T> applySchedulersJobUI() {
-        return observable -> observable.subscribeOn(Schedulers.from(JobExecutor.newInstance())).observeOn(UIThread.newInstance().getScheduler());
+        return new Observable.Transformer<T, T>() {
+            @Override
+            public Observable<T> call(Observable<T> observable) {
+                return observable.subscribeOn(Schedulers.from(JobExecutor.newInstance()))
+                                 .observeOn(UIThread.newInstance().getScheduler());
+            }
+        };
     }
 
     public static <T> Observable.Transformer<T, T> applySchedulers() {
@@ -45,6 +51,8 @@ public class RxUtil {
             return observable -> observable.compose(RxUtil.applySchedulers()).compose(lifecycleProvider.bindToLifecycle());
         }
     }
+
+
 
     public static <T> Observable<T> runInUIThread(T t) {
         return Observable.just(t).observeOn(AndroidSchedulers.mainThread());

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/MatchMatch.Vertical"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:background="@color/photo_activity_bg"
+              android:clipToPadding="true"
+    >
+
+    <RelativeLayout
+        android:id="@+id/title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/photo_title_bg">
+
+        <ImageView
+            android:id="@+id/back_iv"
+            style="@style/WrapMatch"
+            android:paddingLeft="@dimen/size_level3"
+            android:paddingRight="@dimen/size_level3"
+            android:src="@mipmap/ic_back_white"/>
+
+        <LinearLayout
+            android:id="@+id/folder_ll"
+            style="@style/WrapMatch.Horizontal"
+            android:layout_toRightOf="@id/back_iv">
+
+            <TextView
+                android:id="@+id/title_tv"
+                style="@style/WrapMatch"
+                android:layout_marginLeft="@dimen/size_level3"
+                android:layout_marginRight="@dimen/size_level1"
+                android:gravity="center_vertical"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/titlebar_textSize"
+                tools:text="图片"/>
+
+            <ImageView
+                android:id="@+id/arrow_iv"
+                style="@style/WrapMatch"
+                android:src="@mipmap/ic_gallery_arrow_down"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/submit_tv"
+            style="@style/WrapMatch"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/size_level2"
+            android:background="@drawable/selector_btn_photo_send"
+            android:clickable="true"
+            android:gravity="center"
+            android:minWidth="80dp"
+            android:paddingLeft="@dimen/size_level2"
+            android:paddingRight="@dimen/size_level2"
+            android:singleLine="true"
+            android:text="@string/confirm"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_left_right_textSize"/>
+
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/content_gv"
+        style="@style/MatchMatch"
+        android:horizontalSpacing="@dimen/size_level1"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="3"
+        android:overScrollMode="never"
+        android:padding="@dimen/size_level1"
+        android:verticalSpacing="@dimen/size_level1"
+        tools:listitem="@layout/item_square_image"/>
+</LinearLayout>

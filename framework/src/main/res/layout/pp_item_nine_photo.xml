@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <com.hao.common.widget.AiJiaImageView
+        android:id="@+id/iv_item_nine_photo_photo"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        app:iv_isSquare="true"
+        tools:src="@mipmap/pp_ic_holder_light" />
+
+    <ImageView
+        android:id="@+id/iv_item_nine_photo_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:padding="@dimen/pp_size_delete_padding"
+        android:src="@mipmap/pp_ic_delete"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</RelativeLayout>

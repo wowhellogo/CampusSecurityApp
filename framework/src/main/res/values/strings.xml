@@ -18,6 +18,7 @@
     <string name="toast_photo_picker_max">最多只能选择 %1$s 张图片</string>
     <string name="photo_not_support">不支持拍照</string>
     <string name="rationale_ask_again">这个程序没有请求相关权限可能无法正确工作。打开应用程序设置修改应用程序的权限。</string>
+    <string name="image_selection_requires_the_following_permissions_photo_on_the_access_device">图片选择需要以下权限:\n\n1.访问设备上的照片</string>
     <string name="title_settings_dialog">请求权限</string>
     <string name="setting">设置</string>
     <string name="listview_loading">加载中...</string>

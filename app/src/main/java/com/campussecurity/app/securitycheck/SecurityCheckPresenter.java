@@ -17,11 +17,12 @@ import com.hao.common.rx.RESTResultTransformerList;
  */
 
 public class SecurityCheckPresenter extends LoadPresenter {
-    private User mUser = ((App) AppManager.getApp()).cacheUser;
+    private User mUser=null;
 
     @Override
     protected void onCreate(Bundle savedState) {
         super.onCreate(savedState);
+        mUser=((App) AppManager.getApp()).cacheUser;
         loadList(RestDataSoure.newInstance().getSecurityTaskList(mUser.accountGuid).compose(new RESTResultTransformerList<SecurityTaskModel>()));
     }
 
