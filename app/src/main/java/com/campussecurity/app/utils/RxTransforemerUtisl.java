@@ -1,6 +1,7 @@
 package com.campussecurity.app.utils;
 
 import com.campussecurity.app.net.RestDataSoure;
+import com.campussecurity.app.securitycheck.model.UpdateParam;
 import com.hao.common.manager.AppManager;
 import com.hao.common.rx.RESTResultTransformData;
 import com.hao.common.rx.RxUtil;
@@ -20,33 +21,50 @@ import top.zibin.luban.Luban;
 
 public class RxTransforemerUtisl {
     //上传图片
-    public static<T>  Observable.Transformer<T, String> updatePicture(String accountGuid, String path) {
-        return tObservable -> tObservable.flatMap(new Func1<T, Observable<String>>() {
+    public static Observable.Transformer<UpdateParam, String> updatePicture() {
+        return tObservable -> tObservable.flatMap(new Func1<UpdateParam, Observable<String>>() {
             @Override
-            public Observable<String> call(T t) {
-                return RestDataSoure.newInstance().updateImage(accountGuid,path)
+            public Observable<String> call(UpdateParam t) {
+                return RestDataSoure.newInstance().updateImage(t.getAccountGuid(), t.getPath())
                         .compose(RxUtil.applySchedulersJobUI())
                         .compose(new RESTResultTransformData());
             }
 
         });
     }
+
+
+    /**
+     * 构建上传参数
+     *
+     * @return
+     */
+    public static Observable.Transformer<String, UpdateParam> buildUpdataParam() {
+        return stringObservable -> stringObservable.flatMap(new Func1<String, Observable<UpdateParam>>() {
+            @Override
+            public Observable<UpdateParam> call(String s) {
+                String str[] = s.split(",");
+                return Observable.just(new UpdateParam(str[0], str[1]));
+            }
+        });
+    }
+
     //压缩图片
-    public static<T>  Observable.Transformer<T, File> compressPicture(String path) {
-       return tObservable -> tObservable.flatMap(new Func1<T, Observable<File>>() {
-           @Override
-           public Observable<File> call(T t) {
-               return Luban.get(AppManager.getApp())
-                       .load(new File(path))
-                       .putGear(Luban.THIRD_GEAR)
-                       .asObservable()
-                       .compose(RxUtil.applySchedulersJobUI())
-                       .doOnError(Throwable::printStackTrace)
-                       .onErrorResumeNext(throwable -> {
-                           return Observable.empty();
-                       });
-           }
-       });
+    public static Observable.Transformer<String, String> compressPicture() {
+        return tObservable -> tObservable.flatMap(new Func1<String, Observable<String>>() {
+            @Override
+            public Observable<String> call(String t) {
+                return Luban.get(AppManager.getApp())
+                        .load(new File(t))
+                        .putGear(Luban.THIRD_GEAR)
+                        .asObservable()
+                        .compose(RxUtil.applySchedulersJobUI())
+                        .doOnError(Throwable::printStackTrace)
+                        .onErrorResumeNext(throwable -> {
+                            return Observable.empty();
+                        }).map(file -> file.getAbsolutePath());
+            }
+        });
 
     }
 }

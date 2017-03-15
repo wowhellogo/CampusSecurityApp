@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.campussecurity.app.R;
 import com.hao.common.base.BaseActivity;
+import com.hao.common.utils.StatusBarUtil;
 import com.picker.view.HackyViewPager;
 
 import java.util.ArrayList;
@@ -190,6 +191,11 @@ public class PhotoPickerPreviewActivity extends BaseActivity implements View.OnC
                 }
             }
         }
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColorForSwipeBack(this,getResources().getColor(R.color.photo_title_bg));
     }
 
     @Override

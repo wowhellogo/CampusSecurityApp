@@ -2,7 +2,6 @@ package com.picker.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.repacked.org.antlr.v4.codegen.model.chunk.ThisRulePropertyRef_ctx;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;

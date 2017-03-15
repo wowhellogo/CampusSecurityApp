@@ -40,15 +40,14 @@ import pub.devrel.easypermissions.EasyPermissions;
 @RequiresPresenter(LoadPresenter.class)
 public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPresenter, ActivitySecurityCheckDetailsBinding> implements
         ILoadDataView<SecurityCheckDetailModel>, BGASortableNinePhotoLayout.Delegate {
-
+    private static final int REQUEST_CODE_PHOTO_PREVIEW=2;
+    private static int REQUEST_CODE_CHOOSE_PHOTO=3;
     private static final int REQUEST_CODE_PERMISSION_PHOTO_PICKER = 1;
     private String securityTaskId;
     private SecurityCheckDetailModel checkDetailModel;
     private static final int MAX_PHOTO_COUNT=4;
     List<SecurityCheckDetailModel.PictureModel> pictureModels = new ArrayList<>();//网络图片
     private ArrayList<String> pictureStrList = new ArrayList<>();
-    private static final int REQUEST_CODE_PHOTO_PREVIEW=2;
-    private static int REQUEST_CODE_CHOOSE_PHOTO=3;
 
     public static Intent newIntent(Context context, String securityTaskId) {
         Intent intent = new Intent(context, SecurityCheckDetailsActivity.class);
@@ -121,10 +120,6 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
         mBinding.setModel(securityCheckDetailModel);
     }
 
-    @Override
-    public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
-        choicePhotoWrapper();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -159,7 +154,8 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
     private void choicePhotoWrapper() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            mSwipeBackHelper.forward(PhotoPickerActivity.newIntent(this, StorageUtil.getImageDir(), MAX_PHOTO_COUNT, mBinding.sortableNinePhoneLayout.getData(), getString(R.string.confirm)),REQUEST_CODE_CHOOSE_PHOTO);
+            mSwipeBackHelper.forward(PhotoPickerActivity.newIntent(this, StorageUtil.getImageDir(), MAX_PHOTO_COUNT, mBinding.sortableNinePhoneLayout.getData(),
+                    getString(R.string.confirm)),REQUEST_CODE_CHOOSE_PHOTO);
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.image_selection_requires_the_following_permissions_photo_on_the_access_device),
                     REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
@@ -181,6 +177,11 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
                     .build()
                     .show();
         }
+    }
+
+    @Override
+    public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
+        choicePhotoWrapper();
     }
 
 

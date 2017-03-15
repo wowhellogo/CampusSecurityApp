@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.campussecurity.app"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.campussecurity.app">
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
@@ -115,6 +115,12 @@
             android:name=".securitycheck.ProcessorListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
+        <!--添加安全任务-->
+        <activity
+            android:name=".securitycheck.AddSecurityCheckActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            />
 
 
         <!--图片选择界面-->
@@ -138,11 +144,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
-        <activity
-            android:name=".rfidjni.MainRFIDActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            />
     </application>
 
 </manifest>

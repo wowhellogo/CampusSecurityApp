@@ -236,12 +236,16 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
     }
 
     public void secrityException(int position) {
-        mSwipeBackHelper.forward(AddSecurityCheckActivity.class);
+        mSwipeBackHelper.forward(AddSecurityCheckActivity.newItent(this,"111","1"));
     }
 
     private void showScaCard(int position) {
         showLoadingDialog(R.string.scan_carding);
-        RestDataSoure.newInstance().scanCard(mUser.accountGuid, patrolTaskId, mPatrolTaskItemAdapter.getItem(position).getPatrolTaskItemId(), mPatrolTaskItemAdapter.getItem(position).getName()).compose(RxUtil.applySchedulersJobUI()).compose(new RESTResultTransformBoolean()).compose(bindToLifecycle()).subscribe(new Action1<Boolean>() {
+        RestDataSoure.newInstance().scanCard(mUser.accountGuid, patrolTaskId, mPatrolTaskItemAdapter.getItem(position).getPatrolTaskItemId(),
+                mPatrolTaskItemAdapter.getItem(position).getName())
+                .compose(RxUtil.applySchedulersJobUI())
+                .compose(new RESTResultTransformBoolean())
+                .compose(bindToLifecycle()).subscribe(new Action1<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
                 dismissLoadingDialog();
