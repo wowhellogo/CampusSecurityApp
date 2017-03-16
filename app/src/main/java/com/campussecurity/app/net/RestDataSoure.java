@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.Date;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -47,8 +48,8 @@ public class RestDataSoure extends AbRestNetDataSource {
         return api.login(userName, password);
     }
 
-    public Observable<RESTResult> updateUserImage(String accountGuid,String avatar){
-        return api.updateUserImage(accountGuid,avatar);
+    public Observable<RESTResult> updateUserImage(String accountGuid, String avatar) {
+        return api.updateUserImage(accountGuid, avatar);
     }
 
     //我的巡逻
@@ -72,71 +73,83 @@ public class RestDataSoure extends AbRestNetDataSource {
     }
 
 
-
     //添加安全任务
     public Observable<RESTResult> addSecurityTask(String authorAccountGuid, String accountGuid,
-                                           String schoolId, String name, String description,
-                                           String pictrueStr){
-        return api.addSecurityTask(authorAccountGuid,accountGuid,schoolId,name,description,pictrueStr, DateUtils.getDate2MStr(new Date()));
+                                                  String schoolId, String name, String description,
+                                                  String pictrueStr) {
+        return api.addSecurityTask(authorAccountGuid, accountGuid, schoolId, name, description, pictrueStr, DateUtils.getDate2MStr(new Date()));
     }
 
     //得到安保人员
-    public Observable<RESTResult<ProcessorModel>> getSecurityTaskSet(String schoolId){
+    public Observable<RESTResult<ProcessorModel>> getSecurityTaskSet(String schoolId) {
         return api.getSecurityTaskSet(schoolId);
     }
 
     //转签安全任务
-    public Observable<RESTResult> setSecurityTaskSet(String securityTaskId,String accountGuid){
-        return api.setSecurityTaskSet(securityTaskId,accountGuid);
+    public Observable<RESTResult> setSecurityTaskSet(String securityTaskId, String accountGuid) {
+        return api.setSecurityTaskSet(securityTaskId, accountGuid);
     }
 
     //开始安全任务
-    public Observable<RESTResult> startSecurityTaskSet(String securityTaskId){
+    public Observable<RESTResult> startSecurityTaskSet(String securityTaskId) {
         return api.startSecurityTaskSet(securityTaskId);
     }
 
     //完成安全任务
-    public Observable<RESTResult> endSecurityTaskSet(String securityTaskId,String accountGuid,
-                                              String reply, String pictrueStr){
-        return api.endSecurityTaskSet(securityTaskId,accountGuid,reply,pictrueStr);
+    public Observable<RESTResult> endSecurityTaskSet(String securityTaskId, String accountGuid,
+                                                     String reply, String pictrueStr) {
+        return api.endSecurityTaskSet(securityTaskId, accountGuid, reply, pictrueStr);
     }
 
     //安全任务详细
-    public Observable<RESTResult<SecurityCheckDetailModel>> getSecurityTaskContent(String securityTaskId){
+    public Observable<RESTResult<SecurityCheckDetailModel>> getSecurityTaskContent(String securityTaskId) {
         return api.getSecurityTaskContent(securityTaskId);
     }
 
 
-
-
-    //上传图片
-    public Observable<RESTResult> updateImage(String accountGuid,String path){
+    /*//上传图片
+    public Observable<RESTResult> updateImage(String path) {
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
         }
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        return api.updateImage(accountGuid,requestBody);
+        //构建body
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("files[]", file.getName(), RequestBody.create(MediaType.parse("image/png"), file))
+                .build();
+        return api.updateImage()
+    }*/
+
+    public Observable<RESTResult<String>> updateImage(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        //构建body
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file))
+                .build();
+        return api.updateImage(requestBody);
     }
 
 
     //删除安全任务图片
-    public Observable<RESTResult> deleteSecurityTaskItem(String securityTaskId){
+    public Observable<RESTResult> deleteSecurityTaskItem(String securityTaskId) {
         return deleteSecurityTaskItem(securityTaskId);
     }
 
     //提交安全任务图片
-    public Observable<RESTResult> completeSecurityTaskItem(String securityTaskId,String picture){
-        return api.completeSecurityTaskItem(securityTaskId,picture);
+    public Observable<RESTResult> completeSecurityTaskItem(String securityTaskId, String picture) {
+        return api.completeSecurityTaskItem(securityTaskId, picture);
     }
 
     //修改密码
-    public Observable<RESTResult> dutyTree(String userName,String oldPassword,String password,String code){
-        return api.dutyTree(userName,oldPassword,password,code);
+    public Observable<RESTResult> dutyTree(String userName, String oldPassword, String password, String code) {
+        return api.dutyTree(userName, oldPassword, password, code);
     }
 
     //得到版本
-    public Observable<RESTResult> getVersion(){
+    public Observable<RESTResult> getVersion() {
         return api.getVersion();
     }
 

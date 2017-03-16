@@ -21,11 +21,11 @@ import top.zibin.luban.Luban;
 
 public class RxTransforemerUtisl {
     //上传图片
-    public static Observable.Transformer<UpdateParam, String> updatePicture() {
-        return tObservable -> tObservable.flatMap(new Func1<UpdateParam, Observable<String>>() {
+    public static Observable.Transformer<String, String> updatePicture() {
+        return tObservable -> tObservable.flatMap(new Func1<String, Observable<String>>() {
             @Override
-            public Observable<String> call(UpdateParam t) {
-                return RestDataSoure.newInstance().updateImage(t.getAccountGuid(), t.getPath())
+            public Observable<String> call(String t) {
+                return RestDataSoure.newInstance().updateImage(t)
                         .compose(RxUtil.applySchedulersJobUI())
                         .compose(new RESTResultTransformData());
             }

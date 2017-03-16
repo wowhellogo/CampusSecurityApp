@@ -186,19 +186,9 @@ public class AddSecurityCheckActivity extends BaseActivity implements View.OnCli
         Observable.from(mBGASortableNinePhotoLayout.getData()).subscribe(s -> {
             Observable.just(s)
                     .compose(RxTransforemerUtisl.compressPicture())//压缩图片
-                    .flatMap(new Func1<String, Observable<String>>() {
-                        @Override
-                        public Observable<String> call(String s) {
-                            return Observable.just(mUser.accountGuid + "," + s);
-                        }
-                    })
-                    .compose(RxTransforemerUtisl.buildUpdataParam())//构建上传参数
                     .compose(RxTransforemerUtisl.updatePicture())//上传图片
-                    .subscribe(new Action1<String>() {
-                        @Override
-                        public void call(String s) {
-                            Logger.e("上传返回的路径：" + s);
-                        }
+                    .subscribe(s1 -> {
+                        Logger.e("上传返回的路径：" + s1);
                     });
         });
 

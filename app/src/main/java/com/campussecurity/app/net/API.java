@@ -9,6 +9,7 @@ import com.campussecurity.app.securitycheck.SecurityTaskModel;
 import com.hao.common.net.result.RESTResult;
 
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -86,9 +87,8 @@ public interface API {
 
 
     //上传图片
-    @Multipart
     @POST("/api/Image")
-    Observable<RESTResult> updateImage(@Field("accountGuid")String accountGuid,@Part("file\"; filename=\"image.png\"") RequestBody body);
+    Observable<RESTResult<String>> updateImage(@Body RequestBody body);
 
 
     //删除安全任务图片
