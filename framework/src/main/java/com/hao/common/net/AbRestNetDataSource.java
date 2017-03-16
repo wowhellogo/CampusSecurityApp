@@ -10,8 +10,10 @@ import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 
@@ -77,4 +79,9 @@ public abstract class AbRestNetDataSource {
     }
 
     public abstract void newRequest();
+
+    public static RequestBody toRequestBody(String value){
+        RequestBody requestBody=RequestBody.create(MediaType.parse("text/plain"),value);
+        return requestBody;
+    }
 }

@@ -17,7 +17,6 @@
 package com.hao.common.utils;
 
 import android.support.annotation.StringRes;
-import android.view.Gravity;
 import android.widget.Toast;
 
 import com.hao.common.R;
@@ -39,7 +38,6 @@ public class ToastUtil {
                 toast = Toast.makeText(AppManager.getApp(), text, Toast.LENGTH_LONG);
             }
             DrawableUtil.tintBackground(toast.getView(), R.color.colorPrimary);
-            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, UIUtil.dp2px(2));
             toast.show();
         }
     }

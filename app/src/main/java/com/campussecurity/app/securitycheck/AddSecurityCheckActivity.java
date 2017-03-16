@@ -10,13 +10,16 @@ import android.widget.EditText;
 import com.campussecurity.app.App;
 import com.campussecurity.app.R;
 import com.campussecurity.app.login.model.User;
+import com.campussecurity.app.net.RestDataSoure;
 import com.campussecurity.app.utils.RxTransforemerUtisl;
 import com.hao.common.base.BaseActivity;
 import com.hao.common.base.TopBarType;
 import com.hao.common.manager.AppManager;
+import com.hao.common.rx.RESTResultTransformBoolean;
+import com.hao.common.rx.RxUtil;
 import com.hao.common.utils.StorageUtil;
+import com.hao.common.utils.ToastUtil;
 import com.hao.common.widget.BGASortableNinePhotoLayout;
-import com.orhanobut.logger.Logger;
 import com.picker.view.activity.PhotoPickerActivity;
 import com.picker.view.activity.PhotoPickerPreviewActivity;
 
@@ -27,8 +30,6 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * @Package com.campussecurity.app.securitycheck
@@ -49,14 +50,17 @@ public class AddSecurityCheckActivity extends BaseActivity implements View.OnCli
     private User mUser;
     private String authorAccountGuid;
     private String schoolId;
+    private String patrolsId;//地点ID
 
     List<SecurityCheckDetailModel.PictureModel> pictureModels = new ArrayList<>();//网络图片
     private ArrayList<String> pictureStrList = new ArrayList<>();
 
-    public static Intent newItent(Context context, String authorAccountGuid, String schoolId) {
+    public static Intent newItent(Context context, String authorAccountGuid, String schoolId,String patrolsId) {
         Intent intent = new Intent(context, AddSecurityCheckActivity.class);
         intent.putExtra("authorAccountGuid", authorAccountGuid);
         intent.putExtra("schoolId", schoolId);
+        intent.putExtra("patrolsId",patrolsId);
+
         return intent;
     }
 
@@ -90,6 +94,7 @@ public class AddSecurityCheckActivity extends BaseActivity implements View.OnCli
         mUser = ((App) AppManager.getApp()).cacheUser;
         schoolId = getIntent().getStringExtra("schoolId");
         authorAccountGuid = getIntent().getStringExtra("authorAccountGuid");
+        patrolsId=getIntent().getStringExtra("patrolsId");
 
     }
 
@@ -183,14 +188,35 @@ public class AddSecurityCheckActivity extends BaseActivity implements View.OnCli
     }
 
     public void attemptPost() {
-        Observable.from(mBGASortableNinePhotoLayout.getData()).subscribe(s -> {
-            Observable.just(s)
+        showLoadingDialog();
+        StringBuffer sb=new StringBuffer();
+        for(int i=0;i<pictureStrList.size();i++){
+            int finalI = i;
+            Observable.just(pictureStrList.get(i))
                     .compose(RxTransforemerUtisl.compressPicture())//压缩图片
                     .compose(RxTransforemerUtisl.updatePicture())//上传图片
-                    .subscribe(s1 -> {
-                        Logger.e("上传返回的路径：" + s1);
-                    });
-        });
-
+                    .subscribe(s -> {
+                        if (finalI == pictureStrList.size() - 1) {
+                            RestDataSoure.newInstance().addSecurityTask(authorAccountGuid,
+                                    mUser.accountGuid,
+                                    schoolId,
+                                    edTitle.getText().toString(),
+                                    patrolsId, edExplain.getText().toString(),
+                                    sb.toString()).
+                                    compose(RxUtil.applySchedulersJobUI())
+                                    .compose(new RESTResultTransformBoolean())
+                                    .subscribe(aBoolean1 -> {
+                                dismissLoadingDialog();
+                                ToastUtil.show(getString(R.string.post_successful));
+                            }, throwable -> {
+                                dismissLoadingDialog();
+                                ToastUtil.show(getString(R.string.post_fail));
+                            });
+                        }
+                    }, throwable -> {
+                        dismissLoadingDialog();
+                        ToastUtil.show(getString(R.string.str_update_image_fial));
+                    }) ;
+        }
     }
 }

@@ -20,7 +20,6 @@ import com.campussecurity.app.patrol.model.PatrolTaskItemBean;
 import com.campussecurity.app.securitycheck.AddSecurityCheckActivity;
 import com.campussecurity.app.securitycheck.ProcessorEvent;
 import com.campussecurity.app.securitycheck.ProcessorListActivity;
-import com.campussecurity.app.securitycheck.SecurityCheckListActivity;
 import com.hao.common.adapter.OnItemChildClickListener;
 import com.hao.common.base.BaseDataBindingActivity;
 import com.hao.common.manager.AppManager;
@@ -236,7 +235,14 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
     }
 
     public void secrityException(int position) {
-        mSwipeBackHelper.forward(AddSecurityCheckActivity.newItent(this,"111","1"));
+        PatrolTaskItemBean patrolTaskItemBean=mPatrolTaskItemAdapter.getItem(position);
+        if(patrolTaskItemBean.mProcessorModel==null){
+            ToastUtil.show(getString(R.string.str_choose_processor));
+            return;
+        }
+        mSwipeBackHelper.forward(AddSecurityCheckActivity.newItent(this,patrolTaskItemBean.mProcessorModel.getAccountGuid(),
+                patrolTaskItemBean.getSchoolId()+"",
+                patrolTaskItemBean.getPatrolsId()+""));
     }
 
     private void showScaCard(int position) {
@@ -245,22 +251,14 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
                 mPatrolTaskItemAdapter.getItem(position).getName())
                 .compose(RxUtil.applySchedulersJobUI())
                 .compose(new RESTResultTransformBoolean())
-                .compose(bindToLifecycle()).subscribe(new Action1<Boolean>() {
-            @Override
-            public void call(Boolean aBoolean) {
-                dismissLoadingDialog();
-                mPatrolTaskItemAdapter.setRecord(position);
-
-
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                dismissLoadingDialog();
-                Logger.e(throwable.getMessage());
-                mPatrolTaskItemAdapter.notifyDataSetChangedWrapper();
-                ToastUtil.show(throwable.getMessage());
-            }
+                .compose(bindToLifecycle()).subscribe(aBoolean -> {
+                    dismissLoadingDialog();
+                    mPatrolTaskItemAdapter.setRecord(position);
+                }, throwable -> {
+            dismissLoadingDialog();
+            Logger.e(throwable.getMessage());
+            mPatrolTaskItemAdapter.notifyDataSetChangedWrapper();
+            ToastUtil.show(throwable.getMessage());
         });
     }
 

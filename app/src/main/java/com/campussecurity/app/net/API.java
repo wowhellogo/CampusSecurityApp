@@ -14,9 +14,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -63,7 +61,8 @@ public interface API {
     @FormUrlEncoded
     @POST("/api/SecurityTask")
     Observable<RESTResult> addSecurityTask(@Field("authorAccountGuid") String authorAccountGuid, @Field("accountGuid") String accountGuid,
-                                           @Field("schoolId") String schoolId, @Field("name") String name, @Field("description") String description,
+                                           @Field("schoolId") String schoolId, @Field("name") String name, @Field("patrolsId")String patrolsId,
+                                           @Field("description") String description,
                                            @Field("pictrueStr") String pictrueStr,@Field("createDate")String createDate);
 
     //得到安保人员

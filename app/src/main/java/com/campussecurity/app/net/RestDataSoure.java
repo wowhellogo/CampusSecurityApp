@@ -75,9 +75,9 @@ public class RestDataSoure extends AbRestNetDataSource {
 
     //添加安全任务
     public Observable<RESTResult> addSecurityTask(String authorAccountGuid, String accountGuid,
-                                                  String schoolId, String name, String description,
+                                                  String schoolId, String name, String patrolsId,String description,
                                                   String pictrueStr) {
-        return api.addSecurityTask(authorAccountGuid, accountGuid, schoolId, name, description, pictrueStr, DateUtils.getDate2MStr(new Date()));
+        return api.addSecurityTask(authorAccountGuid, accountGuid, schoolId, name, patrolsId,description, pictrueStr, DateUtils.getDate2MStr(new Date()));
     }
 
     //得到安保人员

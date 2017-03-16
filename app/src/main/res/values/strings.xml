@@ -65,8 +65,11 @@
     <string name="current_date">当前状态：</string>
     <string name="btn_dispose">处理</string>
     <string name="post_successful">提交成功</string>
+    <string name="post_fail">提交失败</string>
     <string name="title_process_list">安保人员</string>
     <string name="str_select_processor">请选择要处理的安保人员</string>
     <string name="title_add_security_check">提交安全检查</string>
     <string name="btn_post">点击提交</string>
+    <string name="str_update_image_fial">上传图片不成功，请重试</string>
+    <string name="str_choose_processor">请左滑选择安全人员</string>
 </resources>
