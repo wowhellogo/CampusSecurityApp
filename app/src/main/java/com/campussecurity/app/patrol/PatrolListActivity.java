@@ -125,6 +125,7 @@ public class PatrolListActivity extends BaseActivity<PatrolListPresenter> implem
     @Override
     public void showContentView() {
         if (mLoadingLayout != null) mLoadingLayout.setStatus(LoadingLayout.Success);
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override

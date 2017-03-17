@@ -6,14 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.campussecurity.app.App;
 import com.campussecurity.app.R;
 import com.campussecurity.app.databinding.ActivitySecurityCheckDetailsBinding;
+import com.campussecurity.app.login.model.User;
 import com.campussecurity.app.net.RestDataSoure;
+import com.campussecurity.app.utils.RxTransforemerUtisl;
 import com.hao.common.base.BaseDataBindingActivity;
+import com.hao.common.manager.AppManager;
 import com.hao.common.nucleus.factory.RequiresPresenter;
 import com.hao.common.nucleus.presenter.LoadPresenter;
 import com.hao.common.nucleus.view.loadview.ILoadDataView;
+import com.hao.common.rx.RESTResultTransformBoolean;
 import com.hao.common.rx.RESTResultTransformerModel;
+import com.hao.common.rx.RxBus;
+import com.hao.common.rx.RxUtil;
 import com.hao.common.utils.StorageUtil;
 import com.hao.common.utils.ToastUtil;
 import com.hao.common.widget.BGASortableNinePhotoLayout;
@@ -28,8 +35,9 @@ import java.util.List;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
-
-
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * @Package com.campussecurity.app.securitycheck
@@ -45,9 +53,10 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
     private static final int REQUEST_CODE_PERMISSION_PHOTO_PICKER = 1;
     private String securityTaskId;
     private SecurityCheckDetailModel checkDetailModel;
-    private static final int MAX_PHOTO_COUNT=4;
+    private static final int MAX_PHOTO_COUNT=8;
     List<SecurityCheckDetailModel.PictureModel> pictureModels = new ArrayList<>();//网络图片
     private ArrayList<String> pictureStrList = new ArrayList<>();
+    private User mUser;
 
     public static Intent newIntent(Context context, String securityTaskId) {
         Intent intent = new Intent(context, SecurityCheckDetailsActivity.class);
@@ -77,9 +86,96 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
 
     }
 
+    public void onTvManage(View view){
+        showLoadingDialog();
+        StringBuffer sb = new StringBuffer();
+        if(pictureStrList.size()==0){
+            RestDataSoure.newInstance().endSecurityTaskSet(securityTaskId,
+                    mUser.accountGuid,
+                    mBinding.edExplain.getText().toString(),"")
+                    .compose(RxUtil.applySchedulersJobUI())
+                    .compose(new RESTResultTransformBoolean()).subscribe(aBoolean -> {
+                dismissLoadingDialog();
+                ToastUtil.show(getString(R.string.post_successful));
+            }, throwable -> {
+                dismissLoadingDialog();
+                ToastUtil.show(getString(R.string.post_fail));
+            });
+            return;
+        }
+        Observable.from(pictureStrList)
+                .compose(bindToLifecycle())
+                .flatMap(new Func1<String, Observable<String>>() {
+                    @Override
+                    public Observable<String> call(String s) {
+                        return Observable.just(s)
+                                .compose(RxTransforemerUtisl.compressPicture())//压缩图片
+                                .compose(RxTransforemerUtisl.updatePicture());//上传图片
+                    }
+                }).all(s -> {
+            sb.append(s).append(",");
+            return s != null && !s.equals("");
+        }).doOnError(throwable -> {
+            dismissLoadingDialog();
+            ToastUtil.show(getString(R.string.str_update_image_fial));
+        }).flatMap(new Func1<Boolean, Observable<String>>() {
+            @Override
+            public Observable<String> call(Boolean aBoolean) {
+                StringBuffer sb1=new StringBuffer();
+                String str1="";
+                if(pictureModels.size()>0){
+                    for(SecurityCheckDetailModel.PictureModel pictureModel:pictureModels){
+                        sb1.append(pictureModel.picture).append(",");
+                    }
+                    str1=sb1.toString().substring(0,sb1.length()-1);
+                }
+                return Observable.just((sb.toString().substring(0,sb.length()-1)+str1));
+            }
+        }).flatMap(new Func1<String, Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call(String s) {
+                return RestDataSoure.newInstance().endSecurityTaskSet(securityTaskId,
+                        mUser.accountGuid,
+                        mBinding.edExplain.getText().toString(),s)
+                        .compose(RxUtil.applySchedulersJobUI())
+                        .compose(new RESTResultTransformBoolean());
+            }
+        }).subscribe(aBoolean -> {
+            dismissLoadingDialog();
+            ToastUtil.show(getString(R.string.post_successful));
+        }, throwable -> {
+            dismissLoadingDialog();
+            ToastUtil.show(getString(R.string.post_fail));
+        });
+    }
+
+
+
+
+    public void onTvGoToSign(View view){
+        mSwipeBackHelper.forward(ProcessorListActivity.newIntent(this,0,mUser.schoolId));
+    }
+
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         securityTaskId = getIntent().getStringExtra("securityTaskId");
+        mUser=((App) AppManager.getApp()).cacheUser;
+        RxBus.toObservableAndBindToLifecycle(ProcessorEvent.class, this).subscribe(new Action1<ProcessorEvent>() {
+            @Override
+            public void call(ProcessorEvent processorEvent) {
+                showLoadingDialog();
+                RestDataSoure.newInstance().setSecurityTaskSet(securityTaskId,processorEvent.mProcessorModel.getAccountGuid())
+                        .compose(RxUtil.applySchedulersJobUI())
+                        .compose(new RESTResultTransformBoolean())
+                        .subscribe(aBoolean -> {
+                            dismissLoadingDialog();
+                            ToastUtil.show(getString(R.string.post_successful));
+                        }, throwable -> {
+                            dismissLoadingDialog();
+                            ToastUtil.show(getString(R.string.post_fail));
+                        });
+            }
+        });
         getPresenter().loadModel(RestDataSoure.newInstance().getSecurityTaskContent(securityTaskId).compose(new RESTResultTransformerModel<SecurityCheckDetailModel>()));
     }
 
@@ -118,6 +214,22 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
     public void loadDataToUI(SecurityCheckDetailModel securityCheckDetailModel) {
         checkDetailModel = securityCheckDetailModel;
         mBinding.setModel(securityCheckDetailModel);
+        pictureModels=checkDetailModel.getPictures();
+        if(checkDetailModel.getPictures()==null||checkDetailModel.getPictures().size()==0){
+            return;
+        }
+        Observable.just(checkDetailModel.getPictures()).flatMap(new Func1<List<SecurityCheckDetailModel.PictureModel>, Observable<List<String>>>() {
+            @Override
+            public Observable<List<String>> call(List<SecurityCheckDetailModel.PictureModel> pictureModels) {
+                List<String> list= new ArrayList<>();
+                for(SecurityCheckDetailModel.PictureModel pictureMode:pictureModels){
+                    list.add(pictureMode.picture);
+                }
+                return Observable.just(list);
+            }
+        }).subscribe(strings -> {
+            mBinding.sortableNinePhoneLayout.setData((ArrayList<String>) strings);
+        });
     }
 
 
@@ -129,7 +241,7 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
             mBinding.sortableNinePhoneLayout.setData(selectedImages);
             filterList(selectedImages);
         } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW) {
-            ArrayList<String> selectedImages=PhotoPickerActivity.getSelectedImages(data);
+            ArrayList<String> selectedImages= PhotoPickerActivity.getSelectedImages(data);
             mBinding.sortableNinePhoneLayout.setData(selectedImages);
             filterList(selectedImages);
         }

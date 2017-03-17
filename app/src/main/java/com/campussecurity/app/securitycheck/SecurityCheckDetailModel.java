@@ -52,11 +52,11 @@ public class SecurityCheckDetailModel implements Serializable {
     private String endTime;
     private String createDate;
     private String updateDate;
-    private List<PictureModel> pictrues;
+    private List<PictureModel> pictures;
 
     public class PictureModel{
-        public String securityTaskItemId;
         public String picture;
+
     }
 
     public int getSecurityTaskId() {
@@ -203,11 +203,11 @@ public class SecurityCheckDetailModel implements Serializable {
         this.updateDate = updateDate;
     }
 
-    public List<PictureModel> getPictrues() {
-        return pictrues;
+    public List<PictureModel> getPictures() {
+        return pictures;
     }
 
-    public void setPictrues(List<PictureModel> pictrues) {
-        this.pictrues = pictrues;
+    public void setPictures(List<PictureModel> pictures) {
+        this.pictures = pictures;
     }
 }

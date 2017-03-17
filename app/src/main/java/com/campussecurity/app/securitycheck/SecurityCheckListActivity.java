@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.campussecurity.app.App;
 import com.campussecurity.app.R;
+import com.campussecurity.app.login.model.User;
 import com.hao.common.base.BaseLoadActivity;
 import com.hao.common.base.TopBarType;
+import com.hao.common.manager.AppManager;
 import com.hao.common.nucleus.factory.RequiresPresenter;
 
 /**
@@ -15,6 +18,7 @@ import com.hao.common.nucleus.factory.RequiresPresenter;
  */
 @RequiresPresenter(SecurityCheckPresenter.class)
 public class SecurityCheckListActivity extends BaseLoadActivity<SecurityCheckPresenter, SecurityTaskModel> {
+    private User mUser;
     @Override
     protected void createAdapter() {
         mAdapter = new SecurityCheckAdapter(mRecyclerView, R.layout.item_security_check_list);
@@ -29,7 +33,8 @@ public class SecurityCheckListActivity extends BaseLoadActivity<SecurityCheckPre
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         setTitle(getString(R.string.title_security_check_list));
-        mTitleBar.setRightDrawable(getResources().getDrawable(R.mipmap.ic_add));
+        mUser=((App) AppManager.getApp()).cacheUser;
+        /*mTitleBar.setRightDrawable(getResources().getDrawable(R.mipmap.ic_add));*/
     }
 
     @Override

@@ -52,33 +52,31 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void launchActivity() {
-        if (null != (userName = SPUtil.getString(Constant.APP_USER_NAME)) &&
-                null != (password = SPUtil.getString(Constant.APP_USER_PASSWORD))) {
+        userName = SPUtil.getString(Constant.APP_USER_NAME);
+        password = SPUtil.getString(Constant.APP_USER_PASSWORD);
+        if (null != userName&&!userName.equals("") && null != password&&!password.equals("")) {
             try {
                 password = AESUtil.DeCodeAES(password, Constant.ENCRYPTION_KEY);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            RestDataSoure.newInstance().login(userName, password)
-                    .compose(RxUtil.applySchedulersJobUI())
-                    .compose(new RESTResultTransformerModel<User>())
-                    .subscribe(new Subscriber<User>() {
-                        @Override
-                        public void onCompleted() {
+            RestDataSoure.newInstance().login(userName, password).compose(RxUtil.applySchedulersJobUI()).compose(new RESTResultTransformerModel<User>()).subscribe(new Subscriber<User>() {
+                @Override
+                public void onCompleted() {
 
-                        }
+                }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            ToastUtil.show(e.getMessage());
-                        }
+                @Override
+                public void onError(Throwable e) {
+                    ToastUtil.show(e.getMessage());
+                }
 
-                        @Override
-                        public void onNext(User user) {
-                            ((App) AppManager.getApp()).cacheUser = user;
-                            mSwipeBackHelper.forwardAndFinish(MainActivity.class);
-                        }
-                    });
+                @Override
+                public void onNext(User user) {
+                    ((App) AppManager.getApp()).cacheUser = user;
+                    mSwipeBackHelper.forwardAndFinish(MainActivity.class);
+                }
+            });
         } else {
             mSwipeBackHelper.forwardAndFinish(LoginActivity.class);
         }

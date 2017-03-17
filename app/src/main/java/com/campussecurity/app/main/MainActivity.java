@@ -8,20 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.campussecurity.app.App;
+import com.campussecurity.app.Constant;
 import com.campussecurity.app.R;
 import com.campussecurity.app.databinding.ActivityMainBinding;
+import com.campussecurity.app.login.LoginActivity;
 import com.campussecurity.app.main.model.IconModel;
 import com.hao.common.adapter.OnRVItemClickListener;
 import com.hao.common.base.BaseDataBindingActivity;
 import com.hao.common.base.TopBarType;
 import com.hao.common.manager.AppManager;
 import com.hao.common.nucleus.factory.RequiresPresenter;
+import com.hao.common.utils.SPUtil;
 
 import java.util.List;
 
 @RequiresPresenter(MainPresenter.class)
-public class MainActivity extends BaseDataBindingActivity<MainPresenter, ActivityMainBinding> implements AppBarLayout.OnOffsetChangedListener, OnRVItemClickListener {
+public class MainActivity extends BaseDataBindingActivity<MainPresenter, ActivityMainBinding> implements AppBarLayout.OnOffsetChangedListener, OnRVItemClickListener, View.OnClickListener {
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f;
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
@@ -29,6 +33,7 @@ public class MainActivity extends BaseDataBindingActivity<MainPresenter, Activit
     private boolean mIsTheTitleVisible = false;
     private boolean mIsTheTitleContainerVisible = true;
     IconModelAdapter iconModelAdapter;
+    private MaterialDialog materialDialog;
 
     @Override
     protected int getRootLayoutResID() {
@@ -63,6 +68,7 @@ public class MainActivity extends BaseDataBindingActivity<MainPresenter, Activit
     @Override
     protected void setListener() {
         iconModelAdapter.setOnRVItemClickListener(this);
+        mBinding.imAvatar.setOnClickListener(this);
     }
 
     @Override
@@ -135,5 +141,36 @@ public class MainActivity extends BaseDataBindingActivity<MainPresenter, Activit
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         IconModel iconModel = iconModelAdapter.getItem(position);
         mSwipeBackHelper.forward(new Intent(this, iconModel.toActivity));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.im_avatar:
+                if(materialDialog==null){
+                    materialDialog=new MaterialDialog.Builder(this)
+                            .items(getString(R.string.set_avatar),getString(R.string.change_password),getString(R.string.lagou)).itemsCallback(new MaterialDialog.ListCallback() {
+                                @Override
+                                public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                    switch (position){
+                                        case 0:
+
+                                            break;
+                                        case 1:
+
+                                            break;
+                                        case 2:
+                                            SPUtil.putString(Constant.APP_USER_PASSWORD,"");
+                                            mSwipeBackHelper.forwardAndFinish(LoginActivity.class);
+                                            break;
+                                    }
+                                }
+                            }).show();
+                }else{
+                    materialDialog.show();
+                }
+
+                break;
+        }
     }
 }

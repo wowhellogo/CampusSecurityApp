@@ -18,9 +18,9 @@ import com.hao.common.manager.AppManager;
 import com.hao.common.rx.RESTResultTransformBoolean;
 import com.hao.common.rx.RxUtil;
 import com.hao.common.utils.StorageUtil;
+import com.hao.common.utils.StringUtil;
 import com.hao.common.utils.ToastUtil;
 import com.hao.common.widget.BGASortableNinePhotoLayout;
-import com.orhanobut.logger.Logger;
 import com.picker.view.activity.PhotoPickerActivity;
 import com.picker.view.activity.PhotoPickerPreviewActivity;
 
@@ -31,7 +31,6 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import rx.Observable;
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
@@ -192,8 +191,13 @@ public class AddSecurityCheckActivity extends BaseActivity implements View.OnCli
 
     public void attemptPost() {
         showLoadingDialog();
+        if(StringUtil.isEmpty(edTitle)&&StringUtil.isEmpty(edExplain)){
+            ToastUtil.show(R.string.string_not_info);
+            return;
+        }
         StringBuffer sb = new StringBuffer();
         Observable.from(pictureStrList)
+                .compose(bindToLifecycle())
                 .flatMap(new Func1<String, Observable<String>>() {
                     @Override
                     public Observable<String> call(String s) {
