@@ -50,7 +50,7 @@
     <string name="txt_sex">女</string>
     <string name="txt_age">20</string>
     <string name="txt_address">深圳XXXX</string>
-    <string name="state_untreated">未处理</string>
+    <string name="state_untreated">未开始</string>
     <string name="state_processing">处理中</string>
     <string name="state_processed">已处理</string>
     <string name="title_security_check_list">检查项目</string>
@@ -72,4 +72,8 @@
     <string name="btn_post">点击提交</string>
     <string name="str_update_image_fial">上传图片不成功，请重试</string>
     <string name="str_choose_processor">请左滑选择安全人员</string>
+    <string name="string_not_info">请填写必要信息</string>
+    <string name="set_avatar">设置头像</string>
+    <string name="change_password">修改密码</string>
+    <string name="lagou">退出帐号</string>
 </resources>

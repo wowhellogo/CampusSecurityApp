@@ -83,9 +83,10 @@
                             <com.hao.common.widget.BGASortableNinePhotoLayout
                                 android:id="@+id/sortable_nine_phone_layout"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/margin_120"
+                                android:layout_height="wrap_content"
+                                android:minHeight="@dimen/margin_120"
                                 app:bga_snpl_itemSpanCount="4"
-                                app:bga_snpl_maxItemCount="4"
+                                app:bga_snpl_maxItemCount="8"
                                 app:bga_snpl_otherWhiteSpacing="@dimen/margin_0"
                                 app:bga_snpl_itemCornerRadius="@dimen/margin_5"
                                 />
@@ -170,7 +171,7 @@
                                     android:background="@null"
                                     android:gravity="top"
                                     tools:text="eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-                                    android:inputType="textMultiLine"/>
+                                    />
                             </FrameLayout>
                         </LinearLayout>
 
@@ -185,17 +186,42 @@
                     android:layout_gravity="bottom"
                     android:background="@drawable/common_primary_bg"
                     >
+                    <LinearLayout android:id="@+id/ll_operate"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:padding="@dimen/margin_10"
+                                  android:background="@color/windowBackground"
+                                  android:orientation="horizontal"
 
-                    <TextView
-                        android:id="@+id/tv_dispose"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/margin_10"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center"
-                        android:text="@string/btn_dispose"
-                        android:textColor="@android:color/white"
-                        />
+                        >
+                        <TextView
+                            android:id="@+id/tv_go_to_sign"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="@string/go_to_sign"
+                            android:padding="@dimen/margin_10"
+                            android:gravity="center"
+                            android:onClick="onTvGoToSign"
+                            android:layout_marginRight="@dimen/margin_10"
+                            android:background="@drawable/shape_gray_text_bg"
+                            android:textColor="@color/colorPrimary"
+
+                            />
+                        <TextView
+                            android:id="@+id/tv_manage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/margin_10"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:background="@color/colorPrimary"
+                            android:text="@string/manage"
+                            android:onClick="onTvManage"
+                            android:textColor="@android:color/white"
+                            />
+                    </LinearLayout>
                 </FrameLayout>
             </FrameLayout>
         </com.hao.common.widget.LoadingLayout>
