@@ -84,4 +84,6 @@
     <string name="new_password_2">重复密码</string>
     <string name="password_edit">修改密码</string>
     <string name="str_password_different">你两次输入的新密码不一致，请重复输入</string>
+    <string name="fragment_security_check">安全检查</string>
+    <string name="fragment_patrol_record">巡逻纪录</string>
 </resources>

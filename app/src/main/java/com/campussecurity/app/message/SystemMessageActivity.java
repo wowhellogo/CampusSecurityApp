@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.campussecurity.app.R;
+import com.campussecurity.app.main.model.TabFragmentModel;
+import com.hao.common.nucleus.factory.RequiresPresenter;
+
+import java.util.List;
 
 public class SystemMessageActivity extends AppCompatActivity {
 
@@ -12,4 +16,5 @@ public class SystemMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system_message);
     }
+
 }

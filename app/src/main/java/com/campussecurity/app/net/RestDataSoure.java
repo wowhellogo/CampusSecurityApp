@@ -75,9 +75,9 @@ public class RestDataSoure extends AbRestNetDataSource {
 
     //添加安全任务
     public Observable<RESTResult> addSecurityTask(String authorAccountGuid, String accountGuid,
-                                                  String schoolId, String name, String patrolsId,String description,
+                                                  String schoolId, String name, String patrolsId, String description,
                                                   String pictrueStr) {
-        return api.addSecurityTask(authorAccountGuid, accountGuid, schoolId, name, patrolsId,description, pictrueStr, DateUtils.getDate2MStr(new Date()));
+        return api.addSecurityTask(authorAccountGuid, accountGuid, schoolId, name, patrolsId, description, pictrueStr, DateUtils.getDate2MStr(new Date()));
     }
 
     //得到安保人员
@@ -106,19 +106,6 @@ public class RestDataSoure extends AbRestNetDataSource {
         return api.getSecurityTaskContent(securityTaskId);
     }
 
-
-    /*//上传图片
-    public Observable<RESTResult> updateImage(String path) {
-        File file = new File(path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        //构建body
-        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("files[]", file.getName(), RequestBody.create(MediaType.parse("image/png"), file))
-                .build();
-        return api.updateImage()
-    }*/
 
     public Observable<RESTResult<String>> updateImage(String path) {
         File file = new File(path);
@@ -151,6 +138,32 @@ public class RestDataSoure extends AbRestNetDataSource {
     //得到版本
     public Observable<RESTResult> getVersion() {
         return api.getVersion();
+    }
+
+
+    //我的巡逻纪录
+    public Observable<RESTResult<PatrolTask>> getPatrolTaskRecord(String accountGuid, int startIndex,
+                                                                 int pageSize, int state, String startDate, String endDate) {
+        return api.getPatrolTaskRecord(accountGuid, startIndex, pageSize, state, startDate, endDate);
+    }
+
+    //我的安全任务历史记录
+    Observable<RESTResult<SecurityTaskModel>> getSecurityTaskRecord(String accountGuid, int startIndex,
+                                                                    int pageSize, int state,
+                                                                    String startDate, String endDate) {
+        return api.getSecurityTaskRecord(accountGuid, startIndex, pageSize, state, startDate, endDate);
+    }
+
+    //得到推送纪录
+    Observable<RESTResult> getAppPushRecord(String accountGuid, int startIndex,
+                                            int pageSize, int type,
+                                            String startDate, String endDate) {
+        return api.getAppPushRecord(accountGuid, startIndex, pageSize, type, startDate, endDate);
+    }
+
+    //读取推送
+    Observable<RESTResult> readAppPushRecord(int appPushId) {
+        return api.readAppPushRecord(appPushId);
     }
 
 

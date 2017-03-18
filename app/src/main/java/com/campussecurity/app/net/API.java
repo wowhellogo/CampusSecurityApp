@@ -50,21 +50,20 @@ public interface API {
 
     //安全任务详细
     @GET("/api/SecurityTask")
-    Observable<RESTResult<SecurityCheckDetailModel>> getSecurityTaskContent(@Query("securityTaskId")String securityTaskId);
+    Observable<RESTResult<SecurityCheckDetailModel>> getSecurityTaskContent(@Query("securityTaskId") String securityTaskId);
 
     //得到安全检查
     @GET("/api/SecurityTask")
     Observable<RESTResult<SecurityTaskModel>> getSecurityTaskList(@Query("accountGuid") String accountGui);
 
 
-
     //添加安全任务
     @FormUrlEncoded
     @POST("/api/SecurityTask")
     Observable<RESTResult> addSecurityTask(@Field("authorAccountGuid") String authorAccountGuid, @Field("accountGuid") String accountGuid,
-                                           @Field("schoolId") String schoolId, @Field("name") String name, @Field("patrolsId")String patrolsId,
+                                           @Field("schoolId") String schoolId, @Field("name") String name, @Field("patrolsId") String patrolsId,
                                            @Field("description") String description,
-                                           @Field("pictrueStr") String pictrueStr,@Field("createDate")String createDate);
+                                           @Field("pictrueStr") String pictrueStr, @Field("createDate") String createDate);
 
     //得到安保人员
     @GET("/api/SecurityTaskSet")
@@ -73,17 +72,17 @@ public interface API {
     //转签安全任务
     @FormUrlEncoded
     @POST("/api/SecurityTaskSet")
-    Observable<RESTResult> setSecurityTaskSet(@Field("securityTaskId")String securityTaskId,@Field("accountGuid")String accountGuid);
+    Observable<RESTResult> setSecurityTaskSet(@Field("securityTaskId") String securityTaskId, @Field("accountGuid") String accountGuid);
 
     //开始安全任务
     @DELETE("/api/SecurityTaskSet")
-    Observable<RESTResult> startSecurityTaskSet(@Query("securityTaskId")String securityTaskId);
+    Observable<RESTResult> startSecurityTaskSet(@Query("securityTaskId") String securityTaskId);
 
     //完成安全任务
     @FormUrlEncoded
-    @POST("/api/SecurityTaskSet")
-    Observable<RESTResult> endSecurityTaskSet(@Field("securityTaskId") String securityTaskId,@Field("accountGuid") String accountGuid,
-                                              @Field("reply") String reply,@Field("pictrueStr") String pictrueStr);
+    @PUT("/api/SecurityTaskSet")
+    Observable<RESTResult> endSecurityTaskSet(@Field("securityTaskId") String securityTaskId, @Field("accountGuid") String accountGuid,
+                                              @Field("reply") String reply, @Field("pictrueStr") String pictrueStr);
 
 
     //上传图片
@@ -93,17 +92,17 @@ public interface API {
 
     //删除安全任务图片
     @DELETE("/api/SecurityTaskItem")
-    Observable<RESTResult> deleteSecurityTaskItem(@Query("securityTaskId")String securityTaskId);
+    Observable<RESTResult> deleteSecurityTaskItem(@Query("securityTaskId") String securityTaskId);
 
     //提交安全任务图片
     @FormUrlEncoded
     @POST("/api/SecurityTaskItem")
-    Observable<RESTResult> completeSecurityTaskItem(@Field("securityTaskId")String securityTaskId,@Field("picture")String picture);
+    Observable<RESTResult> completeSecurityTaskItem(@Field("securityTaskId") String securityTaskId, @Field("picture") String picture);
 
     //修改密码
     @FormUrlEncoded
     @POST("/api/DutyTree")
-    Observable<RESTResult> dutyTree(@Field("userName")String userName,@Field("oldPassword")String oldPassword,@Field("password")String password,@Field("code")String code);
+    Observable<RESTResult> dutyTree(@Field("userName") String userName, @Field("oldPassword") String oldPassword, @Field("password") String password, @Field("rePassword") String code);
 
     //得到版本
     @FormUrlEncoded
@@ -115,4 +114,26 @@ public interface API {
     @FormUrlEncoded
     @PUT("/api/Image")
     Observable<RESTResult> updateUserImage(@Field("accountGuid") String accountGuid, @Field("avatar") String avatar);
+
+
+    //我的巡逻纪录
+    @GET("/api/PatrolTask")
+    Observable<RESTResult<PatrolTask>> getPatrolTaskRecord(@Query("accountGuid") String accountGuid, @Query("startIndex") int startIndex, @Query("pageSize")
+            int pageSize, @Query("state") int state, @Query("startDate") String startDate, @Query("endDate") String endDate);
+
+    //我的安全任务历史记录
+    @GET("/api/SecurityTask")
+    Observable<RESTResult<SecurityTaskModel>> getSecurityTaskRecord(@Query("accountGuid") String accountGuid, @Query("startIndex") int startIndex,
+                                                 @Query("pageSize") int pageSize, @Query("state") int state,
+                                                 @Query("startDate") String startDate, @Query("endDate") String endDate);
+
+    //得到推送纪录
+    @GET("/api/AppPush")
+    Observable<RESTResult> getAppPushRecord(@Query("accountGuid") String accountGuid, @Query("startIndex") int startIndex,
+                                            @Query("pageSize") int pageSize, @Query("type") int type,
+                                            @Query("startDate") String startDate, @Query("endDate") String endDate);
+
+    //读取推送
+    @GET("/api/AppPush")
+    Observable<RESTResult> readAppPushRecord(@Field("appPushId") int appPushId);
 }
