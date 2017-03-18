@@ -15,6 +15,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -112,6 +113,6 @@ public interface API {
 
     //设置头像
     @FormUrlEncoded
-    @POST("/api/Image")
+    @PUT("/api/Image")
     Observable<RESTResult> updateUserImage(@Field("accountGuid") String accountGuid, @Field("avatar") String avatar);
 }

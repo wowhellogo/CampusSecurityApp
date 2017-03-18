@@ -121,6 +121,18 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             />
+        <!--上传头像-->
+        <activity
+            android:name=".main.SetHeadPhotoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            />
+        <!--修改密码-->
+        <activity
+            android:name=".main.PasswordEditActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            />
 
 
         <!--图片选择界面-->

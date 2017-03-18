@@ -21,6 +21,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hao.common.R;
 
 public class ImageViewBindingAdapter {
@@ -43,6 +44,18 @@ public class ImageViewBindingAdapter {
                 .placeholder(placeholder)
                 .into(imageView);
     }
+
+    @BindingAdapter({"pathNoCache"})
+    public static void displayImageNoCache(ImageView imageView, String path) {
+        Glide.with(imageView.getContext())
+                .load(getPath(path))
+                .dontAnimate()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.mipmap.ic_defualt_loading)
+                .into(imageView);
+    }
+
 
     @BindingAdapter({"path"})
     public static void displayImage(ImageView imageView, String path) {

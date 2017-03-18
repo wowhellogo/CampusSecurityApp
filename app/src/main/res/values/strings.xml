@@ -76,4 +76,12 @@
     <string name="set_avatar">设置头像</string>
     <string name="change_password">修改密码</string>
     <string name="lagou">退出帐号</string>
+    <string name="photo">相机</string>
+    <string name="upload_picture">上传头像</string>
+    <string name="not_data">暂时没有数据</string>
+    <string name="new_password">新密码</string>
+    <string name="old_password">旧密码</string>
+    <string name="new_password_2">重复密码</string>
+    <string name="password_edit">修改密码</string>
+    <string name="str_password_different">你两次输入的新密码不一致，请重复输入</string>
 </resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <com.hao.common.widget.CircleImageView
+        android:id="@+id/im_icon"
+        android:layout_width="@dimen/avatar_fit_size"
+        android:layout_height="@dimen/avatar_fit_size"
+        android:layout_marginBottom="@dimen/margin_30"
+        />
+
+    <Button
+        android:id="@+id/btn_album"
+        style="@style/comm_btn_style_level2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/photo_album"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/btn_photo"
+        style="@style/comm_btn_style_level2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="@string/photo"
+        android:textStyle="bold"
+        />
+
+
+</LinearLayout>

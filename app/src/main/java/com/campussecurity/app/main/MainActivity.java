@@ -9,20 +9,28 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.campussecurity.app.App;
 import com.campussecurity.app.Constant;
 import com.campussecurity.app.R;
 import com.campussecurity.app.databinding.ActivityMainBinding;
 import com.campussecurity.app.login.LoginActivity;
 import com.campussecurity.app.main.model.IconModel;
+import com.campussecurity.app.main.model.UpLoadImageEvent;
+import com.campussecurity.app.securitycheck.SecurityCheckListActivity;
 import com.hao.common.adapter.OnRVItemClickListener;
 import com.hao.common.base.BaseDataBindingActivity;
 import com.hao.common.base.TopBarType;
+import com.hao.common.image.ImageLoader;
 import com.hao.common.manager.AppManager;
 import com.hao.common.nucleus.factory.RequiresPresenter;
+import com.hao.common.rx.RxBus;
 import com.hao.common.utils.SPUtil;
 
 import java.util.List;
+
+import rx.functions.Action1;
 
 @RequiresPresenter(MainPresenter.class)
 public class MainActivity extends BaseDataBindingActivity<MainPresenter, ActivityMainBinding> implements AppBarLayout.OnOffsetChangedListener, OnRVItemClickListener, View.OnClickListener {
@@ -77,12 +85,21 @@ public class MainActivity extends BaseDataBindingActivity<MainPresenter, Activit
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        RxBus.toObservableAndBindToLifecycle(UpLoadImageEvent.class,this).subscribe(upLoadImageEvent -> {
+            ImageLoader.getInstance().displayCricleImage(this,upLoadImageEvent.url,mBinding.imAvatar);
+        });
+    }
+
+    @Override
     public void onBackPressed() {
         AppManager.getInstance().exitWithDoubleClick();
     }
 
     public void showModuleToUI(List<IconModel> iconModels) {
         iconModelAdapter.setData(iconModels);
+
     }
 
     @Override
@@ -149,21 +166,19 @@ public class MainActivity extends BaseDataBindingActivity<MainPresenter, Activit
             case R.id.im_avatar:
                 if(materialDialog==null){
                     materialDialog=new MaterialDialog.Builder(this)
-                            .items(getString(R.string.set_avatar),getString(R.string.change_password),getString(R.string.lagou)).itemsCallback(new MaterialDialog.ListCallback() {
-                                @Override
-                                public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                    switch (position){
-                                        case 0:
-
-                                            break;
-                                        case 1:
-
-                                            break;
-                                        case 2:
-                                            SPUtil.putString(Constant.APP_USER_PASSWORD,"");
-                                            mSwipeBackHelper.forwardAndFinish(LoginActivity.class);
-                                            break;
-                                    }
+                            .items(getString(R.string.set_avatar),getString(R.string.change_password),
+                                    getString(R.string.lagou)).itemsCallback((dialog, itemView, position, text) -> {
+                                switch (position){
+                                    case 0:
+                                        mSwipeBackHelper.forward(SetHeadPhotoActivity.class);
+                                        break;
+                                    case 1:
+                                        mSwipeBackHelper.forward(PasswordEditActivity.class);
+                                        break;
+                                    case 2:
+                                        SPUtil.putString(Constant.APP_USER_PASSWORD,"");
+                                        mSwipeBackHelper.forwardAndFinish(LoginActivity.class);
+                                        break;
                                 }
                             }).show();
                 }else{

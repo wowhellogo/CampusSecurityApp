@@ -204,7 +204,7 @@
                             android:gravity="center"
                             android:onClick="onTvGoToSign"
                             android:layout_marginRight="@dimen/margin_10"
-                            android:background="@drawable/shape_gray_text_bg"
+                            android:background="@drawable/common_primary_bg"
                             android:textColor="@color/colorPrimary"
 
                             />
@@ -216,7 +216,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:layout_marginLeft="@dimen/margin_10"
-                            android:background="@color/colorPrimary"
+                            style="@style/comm_btn_style_level2"
                             android:text="@string/manage"
                             android:onClick="onTvManage"
                             android:textColor="@android:color/white"
