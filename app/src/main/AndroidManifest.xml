@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.campussecurity.app">
+<manifest package="com.campussecurity.app"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
@@ -38,6 +38,12 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
+    <!-- Use NFC feature and Permissions -->
+    <uses-permission android:name="android.permission.NFC"/>
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true"/>
 
     <application
         android:name=".App"
@@ -46,7 +52,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Transparent">
-        <!--闪屏-->
+
+        <!-- 极光推送 -->
+        <receiver
+            android:name=".utils.receiver.MkJPushMessageReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION"/>
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/>
+
+                <category android:name="com.campussecurity.app"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- 闪屏 -->
         <activity
             android:name=".login.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -59,103 +80,160 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!--主界面-->
+        <!-- 主界面 -->
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
         </activity>
-        <!--登录-->
+        <!-- 登录 -->
         <activity
             android:name=".login.LoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
         </activity>
-        <!--巡逻任务列表-->
+        <!-- 巡逻任务列表 -->
         <activity
             android:name=".patrol.PatrolListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
         </activity>
-        <!--巡逻任务详情-->
+        <!-- 巡逻任务详情 -->
         <activity
             android:name=".patrol.PatrolContentActivity"
+            android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
+
+            <!-- NFC Tech Filter -->
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter"/>
         </activity>
-        <!--安全检查-->
+        <!-- 安全检查 -->
         <activity
             android:name=".securitycheck.SecurityCheckListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
         </activity>
-        <!--系统消息-->
+        <!-- 系统消息 -->
         <activity
             android:name=".message.SystemMessageActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
         </activity>
-        <!--历史纪录-->
+        <!-- 历史纪录 -->
         <activity
             android:name=".record.HistoryRecordActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
         </activity>
-        <!--安全检查详情-->
+        <!-- 安全检查详情 -->
         <activity
             android:name=".securitycheck.SecurityCheckDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait"/>
 
-        <!--安保人列表-->
+        <!-- 安保人列表 -->
         <activity
             android:name=".securitycheck.ProcessorListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
-        <!--添加安全任务-->
+        <!-- 添加安全任务 -->
         <activity
             android:name=".securitycheck.AddSecurityCheckActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            />
-        <!--上传头像-->
+            android:screenOrientation="portrait"/>
+        <!-- 上传头像 -->
         <activity
             android:name=".main.SetHeadPhotoActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            />
-        <!--修改密码-->
+            android:screenOrientation="portrait"/>
+        <!-- 修改密码 -->
         <activity
             android:name=".main.PasswordEditActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait"/>
 
-
-        <!--图片选择界面-->
+        <!-- 图片选择界面 -->
         <activity
             android:name="com.picker.view.activity.PhotoPickerActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <!--单张图片预览界面-->
+        <!-- 单张图片预览界面 -->
         <activity
             android:name="com.picker.view.activity.PicturePreviewActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
-
-        <!--图片选择预览界面-->
-        <activity
-            android:name="com.picker.view.activity.PhotoPickerPreviewActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
+        <!-- 图片选择预览界面 -->
+        <activity
+            android:name="com.picker.view.activity.PhotoPickerPreviewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <!--NFC测试-->
+        <activity
+            android:name=".rfidjni.MainFNCActivity"
+            android:launchMode="singleTop"
+            >
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter"/>
+        </activity>
+
+        <activity
+            android:name=".rfidjni.Write2Nfc"
+            android:launchMode="singleTop"
+            />
+
+        <!--刷卡界面-->
+        <activity
+            android:name=".rfidjni.MainFncCardActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter"/>
+        </activity>
     </application>
 
 </manifest>

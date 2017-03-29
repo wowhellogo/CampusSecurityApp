@@ -6,11 +6,9 @@ import android.widget.EditText;
 import com.campussecurity.app.App;
 import com.campussecurity.app.Constant;
 import com.campussecurity.app.R;
-import com.campussecurity.app.login.model.User;
 import com.campussecurity.app.main.MainActivity;
 import com.campussecurity.app.net.RestDataSoure;
 import com.hao.common.base.BaseActivity;
-import com.hao.common.base.TopBarType;
 import com.hao.common.manager.AppManager;
 import com.hao.common.rx.RESTResultTransformerModel;
 import com.hao.common.rx.RxUtil;
@@ -40,13 +38,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected TopBarType getTopBarType() {
-        return TopBarType.TitleBar;
-    }
-
-    @Override
     protected void initView(Bundle savedInstanceState) {
-        setTitle(getString(R.string.title_activity_login));
         mUserEditText = (EditText) findViewById(R.id.email);
         mPasswordEditText = (EditText) findViewById(R.id.password);
     }
@@ -64,10 +56,10 @@ public class LoginActivity extends BaseActivity {
                     ToastUtil.show(R.string.tip_password_not_null);
                     return;
                 }
+                showLoadingDialog();
                 RestDataSoure.newInstance().login(StringUtil.getEditTextStr(mUserEditText), StringUtil.getEditTextStr(mPasswordEditText))
                         .compose(new RESTResultTransformerModel<>())
                         .compose(RxUtil.applySchedulersJobUI())
-                        .doOnUnsubscribe(() -> showLoadingDialog())
                         .subscribe(user -> {
                             dismissLoadingDialog();
                             ((App) AppManager.getApp()).cacheUser = user;
@@ -79,9 +71,9 @@ public class LoginActivity extends BaseActivity {
                             }
                             mSwipeBackHelper.forwardAndFinish(MainActivity.class);
                         }, throwable -> {
-                            dismissLoadingDialog();
                             Logger.e(throwable.toString());
                             ToastUtil.show(throwable.getMessage());
+                            dismissLoadingDialog();
                         });
             }
         });

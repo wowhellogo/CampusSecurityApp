@@ -4,6 +4,6 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:gravity="center"
-          android:textSize="@dimen/text_size_10"
+          android:textSize="@dimen/text_size_14"
           android:textColor="@color/selector_tab_main_text"
     />

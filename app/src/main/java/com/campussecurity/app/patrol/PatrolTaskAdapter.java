@@ -7,6 +7,7 @@ import com.campussecurity.app.patrol.model.PatrolTask;
 import com.hao.common.adapter.BaseRecyclerViewAdapter;
 import com.hao.common.adapter.BaseViewHolderHelper;
 
+
 /**
  * @Package com.campussecurity.app.patrol
  * @作 用:
@@ -38,19 +39,22 @@ public class PatrolTaskAdapter extends BaseRecyclerViewAdapter<PatrolTask> {
         switch (model.getType()) {
             case 0://每日巡逻
                 helper.setText(R.id.tvType, mContext.getString(R.string.str_day_patrol));
-                helper.setTextColor(R.id.tvType, mContext.getResources().getColor(R.color.colorPatrolGreen));
+                helper.setBackgroundRes(R.id.ff_flag_patrol_bg, R.mipmap.ic_daily_patrol_bg);
+
                 helper.setTextColor(R.id.tvSate, mContext.getResources().getColor(R.color.colorPatrolGreen));
                 helper.setTextColor(R.id.tvDate, mContext.getResources().getColor(R.color.colorPatrolGreen));
                 break;
             case 1://临时巡逻
                 helper.setText(R.id.tvType, mContext.getString(R.string.str_temporary_patrol));
-                helper.setTextColor(R.id.tvType, mContext.getResources().getColor(R.color.colorPatrolYellow));
+                helper.setBackgroundRes(R.id.ff_flag_patrol_bg, R.mipmap.ic_temporary_patrol_bg);
+
                 helper.setTextColor(R.id.tvSate, mContext.getResources().getColor(R.color.colorPatrolYellow));
                 helper.setTextColor(R.id.tvDate, mContext.getResources().getColor(R.color.colorPatrolYellow));
                 break;
             case 2://紧急巡逻
                 helper.setText(R.id.tvType, mContext.getString(R.string.str_emergency_patrol));
-                helper.setTextColor(R.id.tvType, mContext.getResources().getColor(R.color.colorPatrolRed));
+                helper.setBackgroundRes(R.id.ff_flag_patrol_bg, R.mipmap.ic_exigency_patrol_bg);
+
                 helper.setTextColor(R.id.tvSate, mContext.getResources().getColor(R.color.colorPatrolRed));
                 helper.setTextColor(R.id.tvDate, mContext.getResources().getColor(R.color.colorPatrolRed));
                 break;

@@ -1,5 +1,6 @@
 package com.campussecurity.app.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -9,31 +10,40 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.campussecurity.app.App;
 import com.campussecurity.app.Constant;
 import com.campussecurity.app.R;
 import com.campussecurity.app.databinding.ActivityMainBinding;
 import com.campussecurity.app.login.LoginActivity;
+import com.campussecurity.app.login.model.User;
 import com.campussecurity.app.main.model.IconModel;
+import com.campussecurity.app.main.model.TabCountModel;
 import com.campussecurity.app.main.model.UpLoadImageEvent;
-import com.campussecurity.app.securitycheck.SecurityCheckListActivity;
+import com.campussecurity.app.net.RestDataSoure;
 import com.hao.common.adapter.OnRVItemClickListener;
 import com.hao.common.base.BaseDataBindingActivity;
 import com.hao.common.base.TopBarType;
+import com.hao.common.executor.JobExecutor;
 import com.hao.common.image.ImageLoader;
 import com.hao.common.manager.AppManager;
 import com.hao.common.nucleus.factory.RequiresPresenter;
+import com.hao.common.rx.RESTResultTransformerModel;
 import com.hao.common.rx.RxBus;
+import com.hao.common.rx.RxUtil;
 import com.hao.common.utils.SPUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import rx.functions.Action1;
 
 @RequiresPresenter(MainPresenter.class)
-public class MainActivity extends BaseDataBindingActivity<MainPresenter, ActivityMainBinding> implements AppBarLayout.OnOffsetChangedListener, OnRVItemClickListener, View.OnClickListener {
+public class MainActivity extends BaseDataBindingActivity<MainPresenter, ActivityMainBinding> implements AppBarLayout.OnOffsetChangedListener,
+        OnRVItemClickListener, View.OnClickListener {
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f;
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
@@ -42,6 +52,7 @@ public class MainActivity extends BaseDataBindingActivity<MainPresenter, Activit
     private boolean mIsTheTitleContainerVisible = true;
     IconModelAdapter iconModelAdapter;
     private MaterialDialog materialDialog;
+    private User mUser;
 
     @Override
     protected int getRootLayoutResID() {
@@ -62,6 +73,39 @@ public class MainActivity extends BaseDataBindingActivity<MainPresenter, Activit
 
     }
 
+    private void initPush(final Context context) {
+        Set<String> tags=new TreeSet<>();
+        tags.add(mUser.accountGuid.replace("-",""));
+        JobExecutor.newInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                JPushInterface.setTags(context, tags, new TagAliasCallback() {
+                    @Override
+                    public void gotResult(int i, String s, Set<String> set) {
+                        if (i == 0)
+                            Logger.e("设置成功");
+                    }
+                });
+            }
+        });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RestDataSoure.newInstance().getTabCount(mUser.accountGuid)
+                .compose(RxUtil.applySchedulersJobUI())
+                .compose(new RESTResultTransformerModel<TabCountModel>())
+                .subscribe(new Action1<TabCountModel>() {
+                    @Override
+                    public void call(TabCountModel tabCountModel) {
+                        iconModelAdapter.getItem(0).remindCount=tabCountModel.getPatrolTask();
+                        iconModelAdapter.getItem(1).remindCount=tabCountModel.getSecurityTask();
+                        iconModelAdapter.notifyDataSetChangedWrapper();
+                    }
+                });
+    }
 
     @Override
     protected TopBarType getTopBarType() {
@@ -81,7 +125,9 @@ public class MainActivity extends BaseDataBindingActivity<MainPresenter, Activit
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        mBinding.setUser(((App) AppManager.getApp()).cacheUser);
+        mUser=((App) AppManager.getApp()).cacheUser;
+        mBinding.setUser(mUser);
+        initPush(this);
     }
 
     @Override

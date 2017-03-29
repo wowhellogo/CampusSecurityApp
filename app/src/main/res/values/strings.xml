@@ -27,7 +27,7 @@
     <string name="str_emergency_patrol">紧急巡逻</string>
     <string name="patrol_time">规定时间：</string>
     <string name="pre_start_patrol_state">当前状态：未开始</string>
-    <string name="start_patrol">当前状态：处理中</string>
+    <string name="start_patrol">当前状态：巡逻中</string>
     <string name="patrol_complete">当前状态：已完成</string>
 
 
@@ -59,7 +59,7 @@
     <string name="title_patrol_contnet_activity">巡逻任务</string>
     <string name="patrol_start">:开始</string>
     <string name="end_patrol">:结束</string>
-    <string name="scan_carding">刷卡中...</string>
+    <string name="scan_carding">校验中...</string>
     <string name="scan_card_fail">刷卡失败</string>
     <string name="report_date">上报时间:</string>
     <string name="current_date">当前状态：</string>
@@ -86,4 +86,13 @@
     <string name="str_password_different">你两次输入的新密码不一致，请重复输入</string>
     <string name="fragment_security_check">安全检查</string>
     <string name="fragment_patrol_record">巡逻纪录</string>
+    <string name="title_history_record">历史记录</string>
+    <string name="tip_start_security_check">开始处理...</string>
+    <string name="str_read">已读</string>
+    <string name="un_read">未读</string>
+    <string name="title_message">消息</string>
+    <string name="tip_card">把您的卡片贴于手机背面</string>
+    <string name="tip_device_not_support">设备不支持NFC！</string>
+    <string name="please_first_enable_nfc_function_in_the_system_settings">请在系统设置中先启用NFC功能！</string>
+    <string name="scan_card_title">刷卡</string>
 </resources>

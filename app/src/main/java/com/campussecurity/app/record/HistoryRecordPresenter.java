@@ -27,12 +27,12 @@ public class HistoryRecordPresenter extends RxPresenter<HistoryRecordActivity> {
     }
 
     public void loadTabFragmentModelList(Context context){
-        restartableLatestCache(1, () -> {
+        restartableFirst(1, () -> {
             List<TabFragmentModel> list = new ArrayList<>();
             list.add(new TabFragmentModel(context.getString(R.string.fragment_security_check), SecurityCheckListFragment.instantiate(context
                     , SecurityCheckListFragment.class.getName())));
-            list.add(new TabFragmentModel(context.getString(R.string.fragment_patrol_record), SecurityCheckListFragment.instantiate(context
-                    , SecurityCheckListFragment.class.getName())));
+            list.add(new TabFragmentModel(context.getString(R.string.fragment_patrol_record), PatrolListFragment.instantiate(context
+                    , PatrolListFragment.class.getName())));
             return Observable.just(list);
         }, HistoryRecordActivity::setTabViewToUI);
         start(1);

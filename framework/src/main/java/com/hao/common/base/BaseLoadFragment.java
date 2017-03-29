@@ -24,10 +24,10 @@ import java.util.List;
  * @Package com.hao.common.base
  * @作 用:
  * @创 建 人: 林国定 邮箱：linggoudingg@gmail.com
- * @日 期: 2017/3/5 0005
+ * @日 期: 2017/3/18 0018
  */
 
-public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseActivity<LoadPresenter> implements ILoadPageListDataView<T>,
+public abstract class BaseLoadFragment<T>  extends BaseFragment<LoadPresenter> implements ILoadPageListDataView<T>,
         SwipeRefreshLayout.OnRefreshListener, LoadingLayout.OnReloadListener, OnRVItemClickListener, XRecyclerView.LoadingListener {
     protected LoadingLayout mLoadingLayout;
     protected RecyclerView mRecyclerView;
@@ -35,7 +35,7 @@ public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseA
     protected BaseRecyclerViewAdapter<T> mAdapter;
 
     @Override
-    protected int getRootLayoutResID() {
+    public int getRootLayoutResID() {
         return R.layout.layout_base_load;
     }
 
@@ -45,7 +45,8 @@ public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseA
         mRecyclerView = getViewById(R.id.recycler_view);
         mRefreshLayout = getViewById(R.id.swipe_refresh_layout);
         mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorAccent));
-        ViewUtils.initVerticalLinearRecyclerView(this, mRecyclerView);
+
+        ViewUtils.initVerticalLinearRecyclerView(getContext(), mRecyclerView);
         createAdapter();
         mRecyclerView.addItemDecoration(BaseDivider.newBitmapDivider());
         mRecyclerView.setAdapter(mAdapter);
@@ -75,7 +76,7 @@ public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseA
         if (mAdapter != null){
             mAdapter.setData(ms);
             if(mRecyclerView instanceof XRecyclerView){
-                ((XRecyclerView)mRecyclerView).resetLoadMore();
+                ((XRecyclerView) mRecyclerView).resetLoadMore();
             }
         }
     }
@@ -156,13 +157,9 @@ public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseA
 
     @Override
     public Context getContext() {
-        return this;
+        return getBaseActivity();
     }
 
-    @Override
-    public void onRefresh() {
-        mRefreshLayout.setRefreshing(false);
-    }
 
     @Override
     public void onReload(View v) {
@@ -171,6 +168,11 @@ public abstract class BaseLoadActivity<P extends LoadPresenter, T> extends BaseA
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+
+    }
+
+    @Override
+    public void onRefresh() {
 
     }
 

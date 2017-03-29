@@ -22,8 +22,8 @@ import rx.functions.Func0;
 
 
 public class LoadPresenter extends RxPresenter {
-    protected int startIndex = 0;//索引
-    protected int pageSize = 10;
+    public int startIndex = 0;//索引
+    public int pageSize = 10;
     protected boolean isShowing = true;//是否显示加载view
 
     private final static int LOAD_MODEL = 0;
@@ -36,6 +36,21 @@ public class LoadPresenter extends RxPresenter {
             view.loadDataToUI(model);
             view.showContentView();
         }
+    }
+
+    public LoadPresenter restPageSize() {
+        this.startIndex =0;
+        return this;
+    }
+
+    public LoadPresenter setShowing(boolean showing){
+        this.isShowing=showing;
+        return this;
+    }
+
+    public LoadPresenter setPageSize() {
+        this.startIndex += pageSize;
+        return this;
     }
 
     private class DefaultModelErrorAction2<View extends ILoadDataView> implements Action2<View, Throwable> {

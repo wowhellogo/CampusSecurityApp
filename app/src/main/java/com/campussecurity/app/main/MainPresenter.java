@@ -7,6 +7,7 @@ import com.campussecurity.app.main.model.IconModel;
 import com.campussecurity.app.message.SystemMessageActivity;
 import com.campussecurity.app.patrol.PatrolListActivity;
 import com.campussecurity.app.record.HistoryRecordActivity;
+import com.campussecurity.app.rfidjni.MainFNCActivity;
 import com.campussecurity.app.securitycheck.SecurityCheckListActivity;
 import com.hao.common.nucleus.presenter.RxPresenter;
 
@@ -30,6 +31,7 @@ public class MainPresenter extends RxPresenter<MainActivity> {
     @Override
     protected void onCreate(Bundle savedState) {
         super.onCreate(savedState);
+
         loadModule();
     }
 
@@ -55,7 +57,6 @@ public class MainPresenter extends RxPresenter<MainActivity> {
                 .setName("巡逻任务")
                 .setIcon(R.mipmap.ic_grid_patrol)
                 .setIconBg(R.mipmap.ic_grid_patrol_bg)
-                .setRemindCount(98)
                 .setToActivity(PatrolListActivity.class)
                 .builder()
         );
@@ -63,7 +64,6 @@ public class MainPresenter extends RxPresenter<MainActivity> {
                 .setName("安全检查")
                 .setIcon(R.mipmap.ic_grid_safety_check)
                 .setIconBg(R.mipmap.ic_grid_safety_check_bg)
-                .setRemindCount(99)
                 .setToActivity(SecurityCheckListActivity.class)
                 .builder()
         );
@@ -83,6 +83,14 @@ public class MainPresenter extends RxPresenter<MainActivity> {
                 .builder()
         );
 
+
+        list.add(new IconModel.Builder()
+                .setName("NFC测试")
+                .setIcon(R.mipmap.ic_grid_message_history)
+                .setIconBg(R.mipmap.ic_grid_message_history_bg)
+                .setToActivity(MainFNCActivity.class)
+                .builder()
+        );
         return list;
     }
 

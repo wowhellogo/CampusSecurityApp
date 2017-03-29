@@ -17,6 +17,8 @@ import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * @Package com.campussecurity.app
  * @作 用:
@@ -37,6 +39,9 @@ public class App extends MultiDexApplication implements AppManager.Delegate {
             return;
         }
 
+        //极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
         // 初始化内存泄露检测库
         mRefWatcher = LeakCanary.install(this);
         // 初始化应用程序管理器

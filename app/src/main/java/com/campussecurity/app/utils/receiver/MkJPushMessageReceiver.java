@@ -1,4 +1,5 @@
 package com.campussecurity.app.utils.receiver;
+
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 
 import com.campussecurity.app.App;
 import com.campussecurity.app.login.model.User;
+import com.campussecurity.app.main.MainActivity;
 import com.google.gson.GsonBuilder;
 import com.hao.common.manager.AppManager;
 import com.orhanobut.logger.Logger;
@@ -46,6 +48,10 @@ public class MkJPushMessageReceiver extends BroadcastReceiver {
             Logger.e("接受到推送下来的通知");
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Logger.e("用户点击打开了通知");
+            Intent i = new Intent(context, MainActivity.class);
+            i.putExtras(bundle);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
 
         } else {
             Logger.e("Unhandled intent - " + intent.getAction());

@@ -25,6 +25,11 @@ public class SecurityCheckListActivity extends BaseLoadActivity<SecurityCheckPre
     }
 
     @Override
+    protected int getRootLayoutResID() {
+        return R.layout.activity_security_check_list;
+    }
+
+    @Override
     protected TopBarType getTopBarType() {
         return TopBarType.TitleBar;
     }
@@ -47,6 +52,8 @@ public class SecurityCheckListActivity extends BaseLoadActivity<SecurityCheckPre
     public void onClickRightCtv() {
 
     }
+
+
 
     @Override
     public void onReload(View v) {

@@ -11,6 +11,7 @@ import com.campussecurity.app.R;
 import com.campussecurity.app.main.model.TabFragmentModel;
 import com.hao.common.adapter.AppFragmentPagerAdapter;
 import com.hao.common.base.BaseActivity;
+import com.hao.common.base.TopBarType;
 import com.hao.common.nucleus.factory.RequiresPresenter;
 
 import java.util.ArrayList;
@@ -36,6 +37,13 @@ public class HistoryRecordActivity extends BaseActivity<HistoryRecordPresenter> 
     protected void initView(Bundle savedInstanceState) {
         tab = getViewById(R.id.tab);
         vp = getViewById(R.id.vp);
+        setTitle(getString(R.string.title_history_record));
+    }
+
+
+    @Override
+    protected TopBarType getTopBarType() {
+        return TopBarType.TitleBar;
     }
 
     public void setTabView() {

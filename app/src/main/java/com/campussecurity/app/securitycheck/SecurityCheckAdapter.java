@@ -34,6 +34,11 @@ public class SecurityCheckAdapter extends BaseRecyclerViewAdapter<SecurityTaskMo
                 helper.setText(R.id.tvSate, R.string.state_processing);
                 helper.setTextColor(R.id.tvSate,mContext.getResources().getColor(R.color.colorPatrolYellow));
                 break;
+            case 2:
+                helper.setText(R.id.tvDate, model.getEndTime());
+                helper.setText(R.id.tvSate, R.string.state_processed);
+                helper.setTextColor(R.id.tvSate,mContext.getResources().getColor(R.color.colorPatrolRed));
+                break;
         }
 
     }

@@ -1,62 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/common_primary_bg"
-              android:gravity="center_vertical"
-              android:orientation="horizontal"
-              android:paddingBottom="@dimen/margin_10"
-              android:paddingLeft="@dimen/margin_5"
-              android:paddingRight="@dimen/margin_5"
-              android:paddingTop="@dimen/margin_10">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/windowBackground"
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:singleLine="true"
-        android:textSize="@dimen/margin_18"
-        tools:text="巡逻路线A"
-        />
-
-    <TextView
-        android:id="@+id/tvType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:singleLine="true"
-        android:textSize="@dimen/margin_18"
-        tools:text="日常巡逻"
-        tools:textColor="@color/colorPatrolGreen"
-        />
+    >
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/common_primary_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/margin_5"
+        android:paddingBottom="@dimen/margin_10"
+        android:paddingLeft="@dimen/margin_5"
+        android:paddingRight="@dimen/margin_5"
+        android:paddingTop="@dimen/margin_10">
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:layout_marginTop="@dimen/margin_15"
+                android:textSize="@dimen/margin_18"
+                tools:text="巡逻路线A"
+                />
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            tools:text="规定时间：9:00-10:00"
-            tools:textColor="@color/colorPatrolGreen"
-            />
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/margin_5"
+            android:orientation="vertical"
+            >
 
-        <TextView
-            android:id="@+id/tvSate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            tools:text="当前状态：已经到达西门口"
-            tools:textColor="@color/colorPatrolGreen"
-            />
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                tools:text="规定时间：9:00-10:00"
+                tools:textColor="@color/colorPatrolGreen"
+                />
+
+            <TextView
+                android:id="@+id/tvSate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:paddingTop="@dimen/margin_5"
+                tools:text="当前状态：已经到达西门口"
+                tools:textColor="@color/colorPatrolGreen"
+                />
+        </LinearLayout>
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/ff_flag_patrol_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_5"
+        android:paddingRight="@dimen/margin_10"
+        android:paddingTop="@dimen/margin_5"
+        android:paddingBottom="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_15"
+        android:background="@mipmap/ic_daily_patrol_bg"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
 
-</LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_pot"
+                />
+            <TextView
+                android:id="@+id/tvType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:textSize="@dimen/margin_16"
+                tools:text="日常巡逻"
+                android:textColor="@android:color/white"
+                />
+        </LinearLayout>
+
+    </FrameLayout>
+
+</FrameLayout>

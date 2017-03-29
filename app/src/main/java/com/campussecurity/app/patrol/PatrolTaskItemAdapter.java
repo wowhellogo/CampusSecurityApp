@@ -4,13 +4,14 @@ import android.support.v7.widget.RecyclerView;
 
 import com.campussecurity.app.R;
 import com.campussecurity.app.patrol.model.PatrolTaskItemBean;
-import com.daimajia.swipe.SwipeLayout;
 import com.hao.common.adapter.BaseRecyclerViewAdapter;
 import com.hao.common.adapter.BaseViewHolderHelper;
 import com.hao.common.utils.CalendarUtil;
 import com.hao.common.utils.DateUtils;
 
 import java.util.Date;
+
+
 
 /**
  * @Package com.campussecurity.app.patrol
@@ -37,7 +38,6 @@ public class PatrolTaskItemAdapter extends BaseRecyclerViewAdapter<PatrolTaskIte
 
     @Override
     protected void fillData(BaseViewHolderHelper helper, int position, PatrolTaskItemBean model) {
-        ((SwipeLayout) helper.getView(R.id.swipe_layout)).close();
         Date date = null;
         if (model.getRecord() != null) {
             date = DateUtils.getStr2LDate(model.getRecord().getCreateDate());

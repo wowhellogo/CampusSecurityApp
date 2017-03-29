@@ -43,6 +43,7 @@ public abstract class BaseLoadBindingActivity<T> extends BaseActivity<LoadPresen
         mLoadingLayout = getViewById(R.id.loading_layout);
         mRecyclerView = getViewById(R.id.recycler_view);
         mRefreshLayout = getViewById(R.id.swipe_refresh_layout);
+        mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorAccent));
 
         ViewUtils.initVerticalLinearRecyclerView(this, mRecyclerView);
         createAdapter();
@@ -74,8 +75,12 @@ public abstract class BaseLoadBindingActivity<T> extends BaseActivity<LoadPresen
 
     @Override
     public void onLoadMoreDataToUI(List<T> ms) {
-        if (mAdapter != null)
+        if (mAdapter != null){
             mAdapter.addMoreData(ms);
+            if(mRecyclerView instanceof XRecyclerView){
+                ((XRecyclerView) mRecyclerView).resetLoadMore();
+            }
+        }
     }
 
 

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@color/windowBackground"
               android:gravity="center_vertical"
               android:orientation="horizontal"
               android:paddingLeft="@dimen/margin_10"
-              android:background="@color/windowBackground"
 
     >
 
@@ -44,51 +45,19 @@
 
             />
 
-        <com.daimajia.swipe.SwipeLayout
+        <cn.fanrunqi.swipelayoutlibrary.SwipeLayout
             android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
             >
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@color/colorPatrolGreen"
-                android:orientation="horizontal"
-                android:gravity="center"
-                >
-                <TextView
-                    android:id="@+id/tv_operation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="刷卡"
-                    android:paddingStart="@dimen/margin_20"
-                    android:paddingEnd="@dimen/margin_20"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_operation_manageer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingStart="@dimen/margin_20"
-                    android:paddingEnd="@dimen/margin_20"
-                    android:text="选择安保人员"
-                    android:background="@color/colorPatrolRed"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/root_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="@drawable/common_window_back_ground_bg"
+                android:orientation="horizontal"
                 android:paddingBottom="@dimen/margin_15"
                 android:paddingLeft="@dimen/margin_5"
                 android:paddingTop="@dimen/margin_15"
@@ -114,13 +83,44 @@
                     android:gravity="right"
                     android:paddingRight="@dimen/margin_10"
                     android:singleLine="true"
-                    tools:text="9：15  已经开始巡逻了"
                     android:textColor="@color/colorPatrolGreen"
                     android:textSize="@dimen/text_size_14"
+                    tools:text="9：15  已经开始巡逻了"
                     />
 
             </LinearLayout>
-        </com.daimajia.swipe.SwipeLayout>
+
+            <LinearLayout
+                android:layout_height="50dp"
+                android:layout_width="160dp"
+                android:background="@color/colorPatrolGreen"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tv_operation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/margin_20"
+                    android:paddingStart="@dimen/margin_20"
+                    android:text="刷卡"
+                    android:textColor="@android:color/white"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_operation_manageer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPatrolRed"
+                    android:gravity="center"
+                    android:text="安保人员"
+                    android:textColor="@android:color/white"
+                    />
+
+            </LinearLayout>
+        </cn.fanrunqi.swipelayoutlibrary.SwipeLayout>
 
 
     </FrameLayout>

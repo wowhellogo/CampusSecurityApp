@@ -43,7 +43,7 @@ import rx.functions.Func1;
  * @Package com.campussecurity.app.securitycheck
  * @作 用:安全任务详情处理
  * @创 建 人: 林国定 邮箱：linggoudingg@gmail.com
- * @日 期: 2017/3/10 0010
+ * @日 期: 2017/3/10
  */
 @RequiresPresenter(LoadPresenter.class)
 public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPresenter, ActivitySecurityCheckDetailsBinding> implements
@@ -143,6 +143,7 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
         }).subscribe(aBoolean -> {
             dismissLoadingDialog();
             ToastUtil.show(getString(R.string.post_successful));
+            mSwipeBackHelper.backward();
         }, throwable -> {
             dismissLoadingDialog();
             ToastUtil.show(getString(R.string.post_fail));
@@ -160,6 +161,8 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
     protected void processLogic(Bundle savedInstanceState) {
         securityTaskId = getIntent().getStringExtra("securityTaskId");
         mUser=((App) AppManager.getApp()).cacheUser;
+
+
         RxBus.toObservableAndBindToLifecycle(ProcessorEvent.class, this).subscribe(new Action1<ProcessorEvent>() {
             @Override
             public void call(ProcessorEvent processorEvent) {
@@ -170,6 +173,7 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
                         .subscribe(aBoolean -> {
                             dismissLoadingDialog();
                             ToastUtil.show(getString(R.string.post_successful));
+                            finish();
                         }, throwable -> {
                             dismissLoadingDialog();
                             ToastUtil.show(getString(R.string.post_fail));
@@ -215,6 +219,31 @@ public class SecurityCheckDetailsActivity extends BaseDataBindingActivity<LoadPr
         checkDetailModel = securityCheckDetailModel;
         mBinding.setModel(securityCheckDetailModel);
         pictureModels=checkDetailModel.getPictures();
+        if(securityCheckDetailModel.getReply()!=null&&securityCheckDetailModel.getReply().equals("")){
+            mBinding.edExplain.setText(securityCheckDetailModel.getReply());
+        }
+        if(checkDetailModel.getState()==0){
+            RestDataSoure.newInstance().startSecurityTaskSet(securityTaskId)
+                    .compose(RxUtil.applySchedulersJobUI())
+                    .compose(new RESTResultTransformBoolean())
+                    .subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                        }
+                    });
+        }
+        if(checkDetailModel.getState()==2){
+            mBinding.sortableNinePhoneLayout.setEditable(false);
+
+            mBinding.edExplain.setFocusableInTouchMode(false);
+
+            mBinding.tvManage.setClickable(false);
+            mBinding.tvManage.setText(checkDetailModel.getState()==1?getString(R.string.state_processing):getString(R.string.state_processed));
+
+
+        }
+
+
         if(checkDetailModel.getPictures()==null||checkDetailModel.getPictures().size()==0){
             return;
         }

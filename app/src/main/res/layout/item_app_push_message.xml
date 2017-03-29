@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/common_primary_bg"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/margin_10"
+              android:paddingLeft="@dimen/margin_5"
+              android:paddingRight="@dimen/margin_5"
+              android:paddingTop="@dimen/margin_10">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textSize="@dimen/margin_18"
+            tools:text="您收到安全任务:周边环境安全"
+            />
+
+
+
+        <TextView
+            android:id="@+id/tvRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvName"
+            android:layout_alignParentRight="true"
+            android:singleLine="true"
+            tools:text="未读"
+            tools:textColor="@color/colorPatrolGreen"
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvName"
+            android:layout_centerHorizontal="true"
+            android:singleLine="true"
+            tools:text="2017-03-18 10:44:41"
+            />
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/margin_5"
+            android:singleLine="true"
+            tools:text="开始时间：03:00结束时间：03:00"
+            />
+    </LinearLayout>
+
+</LinearLayout>

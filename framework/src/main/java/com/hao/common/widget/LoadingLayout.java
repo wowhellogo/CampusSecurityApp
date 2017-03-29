@@ -2,14 +2,11 @@ package com.hao.common.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
-import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -505,7 +502,6 @@ public class LoadingLayout extends FrameLayout {
      * @return
      */
     public LoadingLayout setOnReloadListener(OnReloadListener listener) {
-
         this.listener = listener;
         return this;
     }

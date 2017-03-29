@@ -2,6 +2,8 @@ package com.campussecurity.app.net;
 
 import com.campussecurity.app.BuildConfig;
 import com.campussecurity.app.login.model.User;
+import com.campussecurity.app.main.model.TabCountModel;
+import com.campussecurity.app.message.AppPushMessage;
 import com.campussecurity.app.patrol.model.PatrolTask;
 import com.campussecurity.app.patrol.model.PatrolTaskDetails;
 import com.campussecurity.app.securitycheck.ProcessorModel;
@@ -143,27 +145,30 @@ public class RestDataSoure extends AbRestNetDataSource {
 
     //我的巡逻纪录
     public Observable<RESTResult<PatrolTask>> getPatrolTaskRecord(String accountGuid, int startIndex,
-                                                                 int pageSize, int state, String startDate, String endDate) {
-        return api.getPatrolTaskRecord(accountGuid, startIndex, pageSize, state, startDate, endDate);
+                                                                 int pageSize) {
+        return api.getPatrolTaskRecord(accountGuid, startIndex, pageSize);
     }
 
     //我的安全任务历史记录
-    Observable<RESTResult<SecurityTaskModel>> getSecurityTaskRecord(String accountGuid, int startIndex,
-                                                                    int pageSize, int state,
-                                                                    String startDate, String endDate) {
-        return api.getSecurityTaskRecord(accountGuid, startIndex, pageSize, state, startDate, endDate);
+    public Observable<RESTResult<SecurityTaskModel>> getSecurityTaskRecord(String accountGuid, int startIndex,
+                                                                    int pageSize) {
+        return api.getSecurityTaskRecord(accountGuid, startIndex, pageSize,2);
     }
 
     //得到推送纪录
-    Observable<RESTResult> getAppPushRecord(String accountGuid, int startIndex,
-                                            int pageSize, int type,
-                                            String startDate, String endDate) {
-        return api.getAppPushRecord(accountGuid, startIndex, pageSize, type, startDate, endDate);
+    public Observable<RESTResult<AppPushMessage>> getAppPushRecord(String accountGuid, int startIndex,
+                                            int pageSize) {
+        return api.getAppPushRecord(accountGuid, startIndex, pageSize);
     }
 
     //读取推送
-    Observable<RESTResult> readAppPushRecord(int appPushId) {
+    public Observable<RESTResult> readAppPushRecord(int appPushId) {
         return api.readAppPushRecord(appPushId);
+    }
+
+    //得到未处理的个数
+    public Observable<RESTResult<TabCountModel>> getTabCount(String accountGuid){
+        return api.getTabCount(accountGuid);
     }
 
 

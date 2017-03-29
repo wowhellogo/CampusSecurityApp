@@ -1,7 +1,6 @@
 package com.hao.common.rx;
 
 import com.hao.common.exception.NotDataListException;
-import com.hao.common.exception.NotFoundDataException;
 import com.hao.common.exception.ResolveErrorException;
 import com.hao.common.exception.RestErrorException;
 import com.hao.common.net.result.RESTResult;
@@ -27,15 +26,15 @@ public class RESTResultTransformerList<E> implements Observable.Transformer<REST
             public Observable<List<E>> call(RESTResult<E> mrestResult) {
                 if (!mrestResult.isHasError()) {//成功
                     if (mrestResult.getResult() != null) {
+                        Result<E> result = mrestResult.getResult();
                         if (mrestResult.getResult().isHasData()) {//有数据
-                            Result<E> result = mrestResult.getResult();
                             if (null != result.getList() && result.getTotal() > 0 && result.getList().size() > 0) {
                                 return Observable.just(result.getList());
                             } else {//没有更多的数据
                                 return Observable.error(new NotDataListException(mrestResult.getMessage()+"", result.getTotal()));
                             }
                         } else {//List没有数据
-                            return Observable.error(new NotFoundDataException(mrestResult.getMessage()));
+                            return Observable.error(new NotDataListException(mrestResult.getMessage()+"", result.getTotal()));
                         }
                     } else {
                         return Observable.error(new ResolveErrorException());//解析出错

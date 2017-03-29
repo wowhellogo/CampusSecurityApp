@@ -199,11 +199,21 @@ public class PhotoPickerPreviewActivity extends BaseActivity implements View.OnC
     }
 
     @Override
+    public boolean isSupportSwipeBack() {
+        return false;
+    }
+
+    @Override
+    public void onClickLeftCtv() {
+        finish();
+    }
+
+    @Override
     public void onBackPressed() {
         Intent intent = new Intent();
         intent.putStringArrayListExtra(EXTRA_SELECTED_IMAGES, mSelectedImages);
         setResult(RESULT_CANCELED, intent);
-        mSwipeBackHelper.backward();
+        finish();
     }
 
     @Override

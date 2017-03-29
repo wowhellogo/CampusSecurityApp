@@ -17,6 +17,8 @@ import com.campussecurity.app.login.model.User;
 import com.campussecurity.app.net.RestDataSoure;
 import com.campussecurity.app.patrol.model.PatrolTaskDetails;
 import com.campussecurity.app.patrol.model.PatrolTaskItemBean;
+import com.campussecurity.app.rfidjni.MainFncCardActivity;
+import com.campussecurity.app.rfidjni.TagIdEvent;
 import com.campussecurity.app.securitycheck.AddSecurityCheckActivity;
 import com.campussecurity.app.securitycheck.ProcessorEvent;
 import com.campussecurity.app.securitycheck.ProcessorListActivity;
@@ -35,15 +37,12 @@ import com.hao.common.widget.LoadingLayout;
 import com.hao.common.widget.titlebar.TitleBar;
 import com.orhanobut.logger.Logger;
 
-import rx.functions.Action1;
-
 @RequiresPresenter(PatrolContentPresenter.class)
 public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContentPresenter, ActivityPatrolContentBinding> implements ILoadDataView<PatrolTaskDetails>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, LoadingLayout.OnReloadListener {
     private final static String PATROLTASK_ID = "patrolTaskId";
     private int patrolTaskId;
     private PatrolTaskItemAdapter mPatrolTaskItemAdapter;
     private User mUser = ((App) AppManager.getApp()).cacheUser;
-
 
     public static Intent newIntent(Context context, int patrolTaskId) {
         Intent intent = new Intent(context, PatrolContentActivity.class);
@@ -73,7 +72,9 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
         ViewUtils.initVerticalLinearRecyclerView(this, mBinding.recyclerView);
         mPatrolTaskItemAdapter = new PatrolTaskItemAdapter(mBinding.recyclerView);
         mBinding.recyclerView.setAdapter(mPatrolTaskItemAdapter);
+
     }
+
 
     @Override
     protected void setListener() {
@@ -85,7 +86,8 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
             public void onItemChildClick(ViewGroup parent, View childView, int position) {
                 switch (childView.getId()) {
                     case R.id.tv_operation:
-                        showScaCard(position);
+                        //刷卡
+                        mSwipeBackHelper.forward(MainFncCardActivity.newIntent(getContext(), position));
                         break;
                     case R.id.tv_operation_manageer:
                         mSwipeBackHelper.forward(ProcessorListActivity.newIntent(getContext(), position, mPatrolTaskItemAdapter.getItem(position).getSchoolId() + ""));
@@ -102,14 +104,16 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
     @Override
     protected void onStart() {
         super.onStart();
-        RxBus.toObservableAndBindToLifecycle(ProcessorEvent.class, this).subscribe(new Action1<ProcessorEvent>() {
-            @Override
-            public void call(ProcessorEvent processorEvent) {
-                mPatrolTaskItemAdapter.getItem(processorEvent.position).mProcessorModel = processorEvent.mProcessorModel;
-                mPatrolTaskItemAdapter.notifyItemChangedWrapper(processorEvent.position);
-            }
+        RxBus.toObservableAndBindToLifecycle(ProcessorEvent.class, this).subscribe(processorEvent -> {
+            mPatrolTaskItemAdapter.getItem(processorEvent.position).mProcessorModel = processorEvent.mProcessorModel;
+            mPatrolTaskItemAdapter.notifyItemChangedWrapper(processorEvent.position);
+        });
+
+        RxBus.toObservableAndBindToLifecycle(TagIdEvent.class, this).subscribe(tagIdEvent -> {
+            showScaCard(tagIdEvent.position, tagIdEvent.uid);
         });
     }
+
 
     @Override
     public void onClickLeftCtv() {
@@ -129,7 +133,41 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
         Logger.e(patrolTaskDetails.toString());
         mBinding.swipeRefreshLayout.setRefreshing(false);
         mBinding.setModel(patrolTaskDetails);
+        setState(patrolTaskDetails);
         mPatrolTaskItemAdapter.setData(patrolTaskDetails.getItems());
+    }
+
+
+    public void setState(PatrolTaskDetails model) {
+        switch (model.getState()) {
+            case 0:
+                mBinding.tvState.setText(R.string.pre_start_patrol_state);
+                break;
+            case 1:
+                mBinding.tvState.setText(R.string.start_patrol);
+                break;
+            case 2:
+                mBinding.tvState.setText(R.string.patrol_complete);
+                break;
+        }
+
+
+        switch (model.getType()) {
+            case 0://每日巡逻
+
+                mBinding.tvState.setTextColor(getResources().getColor(R.color.colorPatrolGreen));
+                mBinding.tvDate.setTextColor(getResources().getColor(R.color.colorPatrolGreen));
+                break;
+            case 1://临时巡逻
+                mBinding.tvState.setTextColor(getResources().getColor(R.color.colorPatrolYellow));
+                mBinding.tvDate.setTextColor(getResources().getColor(R.color.colorPatrolYellow));
+                break;
+            case 2://紧急巡逻
+
+                mBinding.tvState.setTextColor(getResources().getColor(R.color.colorPatrolRed));
+                mBinding.tvDate.setTextColor(getResources().getColor(R.color.colorPatrolRed));
+                break;
+        }
     }
 
 
@@ -235,26 +273,21 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
     }
 
     public void secrityException(int position) {
-        PatrolTaskItemBean patrolTaskItemBean=mPatrolTaskItemAdapter.getItem(position);
-        if(patrolTaskItemBean.mProcessorModel==null){
+        PatrolTaskItemBean patrolTaskItemBean = mPatrolTaskItemAdapter.getItem(position);
+        if (patrolTaskItemBean.mProcessorModel == null) {
             ToastUtil.show(getString(R.string.str_choose_processor));
             return;
         }
-        mSwipeBackHelper.forward(AddSecurityCheckActivity.newItent(this,patrolTaskItemBean.mProcessorModel.getAccountGuid(),
-                patrolTaskItemBean.getSchoolId()+"",
-                patrolTaskItemBean.getPatrolsId()+""));
+        mSwipeBackHelper.forward(AddSecurityCheckActivity.newItent(this, patrolTaskItemBean.mProcessorModel.getAccountGuid(), patrolTaskItemBean.getSchoolId() + "", patrolTaskItemBean.getPatrolsId() + ""));
     }
 
-    private void showScaCard(int position) {
+    private void showScaCard(int position, String code) {
         showLoadingDialog(R.string.scan_carding);
-        RestDataSoure.newInstance().scanCard(mUser.accountGuid, patrolTaskId, mPatrolTaskItemAdapter.getItem(position).getPatrolTaskItemId(),
-                mPatrolTaskItemAdapter.getItem(position).getName())
-                .compose(RxUtil.applySchedulersJobUI())
-                .compose(new RESTResultTransformBoolean())
-                .compose(bindToLifecycle()).subscribe(aBoolean -> {
-                    dismissLoadingDialog();
-                    mPatrolTaskItemAdapter.setRecord(position);
-                }, throwable -> {
+        RestDataSoure.newInstance().scanCard(mUser.accountGuid, patrolTaskId, mPatrolTaskItemAdapter.getItem(position).getPatrolTaskItemId(), code).compose(RxUtil.applySchedulersJobUI()).compose(new RESTResultTransformBoolean()).compose(bindToLifecycle()).subscribe(aBoolean -> {
+            dismissLoadingDialog();
+            mPatrolTaskItemAdapter.setRecord(position);
+            onRefresh();
+        }, throwable -> {
             dismissLoadingDialog();
             Logger.e(throwable.getMessage());
             mPatrolTaskItemAdapter.notifyDataSetChangedWrapper();

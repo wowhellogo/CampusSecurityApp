@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.campussecurity.app.R;
 import com.campussecurity.app.patrol.model.PatrolTask;
-import com.hao.common.adapter.BaseDivider;
 import com.hao.common.adapter.OnRVItemClickListener;
 import com.hao.common.base.BaseActivity;
 import com.hao.common.base.TopBarType;
@@ -44,12 +43,13 @@ public class PatrolListActivity extends BaseActivity<PatrolListPresenter> implem
         mRefreshLayout = getViewById(R.id.swipe_refresh_layout);
         mLoadingLayout = getViewById(R.id.loading_layout);
         mRecyclerView = getViewById(R.id.recycler_view);
+        mRefreshLayout.setColorSchemeColors(getResources().getColor(com.hao.common.R.color.colorPrimary),getResources().getColor(com.hao.common.R.color.colorAccent));
         ViewUtils.initVerticalLinearRecyclerView(this, mRecyclerView);
         mAdapter = new PatrolTaskAdapter(mRecyclerView, R.layout.item_patrol);
-        mRecyclerView.addItemDecoration(BaseDivider.newBitmapDivider());
         mRecyclerView.setAdapter(mAdapter);
         showLoadingView();
     }
+
 
     @Override
     public void onClickLeftCtv() {
@@ -136,6 +136,7 @@ public class PatrolListActivity extends BaseActivity<PatrolListPresenter> implem
     @Override
     public void showFailView() {
         if (mLoadingLayout != null) mLoadingLayout.setStatus(LoadingLayout.Error);
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override

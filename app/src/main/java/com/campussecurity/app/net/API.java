@@ -1,6 +1,8 @@
 package com.campussecurity.app.net;
 
 import com.campussecurity.app.login.model.User;
+import com.campussecurity.app.main.model.TabCountModel;
+import com.campussecurity.app.message.AppPushMessage;
 import com.campussecurity.app.patrol.model.PatrolTask;
 import com.campussecurity.app.patrol.model.PatrolTaskDetails;
 import com.campussecurity.app.securitycheck.ProcessorModel;
@@ -119,21 +121,23 @@ public interface API {
     //我的巡逻纪录
     @GET("/api/PatrolTask")
     Observable<RESTResult<PatrolTask>> getPatrolTaskRecord(@Query("accountGuid") String accountGuid, @Query("startIndex") int startIndex, @Query("pageSize")
-            int pageSize, @Query("state") int state, @Query("startDate") String startDate, @Query("endDate") String endDate);
+            int pageSize);
 
     //我的安全任务历史记录
     @GET("/api/SecurityTask")
     Observable<RESTResult<SecurityTaskModel>> getSecurityTaskRecord(@Query("accountGuid") String accountGuid, @Query("startIndex") int startIndex,
-                                                 @Query("pageSize") int pageSize, @Query("state") int state,
-                                                 @Query("startDate") String startDate, @Query("endDate") String endDate);
+                                                 @Query("pageSize") int pageSize,@Query("state")int state);
 
     //得到推送纪录
     @GET("/api/AppPush")
-    Observable<RESTResult> getAppPushRecord(@Query("accountGuid") String accountGuid, @Query("startIndex") int startIndex,
-                                            @Query("pageSize") int pageSize, @Query("type") int type,
-                                            @Query("startDate") String startDate, @Query("endDate") String endDate);
+    Observable<RESTResult<AppPushMessage>> getAppPushRecord(@Query("accountGuid") String accountGuid, @Query("startIndex") int startIndex,
+                                            @Query("pageSize") int pageSize);
 
-    //读取推送
-    @GET("/api/AppPush")
-    Observable<RESTResult> readAppPushRecord(@Field("appPushId") int appPushId);
+    //已读
+    @DELETE("/api/AppPush")
+    Observable<RESTResult> readAppPushRecord(@Query("appPushId") int appPushId);
+
+    //得到未处理的数量
+    @GET("/api/Account")
+    Observable<RESTResult<TabCountModel>> getTabCount(@Query("accountGuid")String accountGuid);
 }

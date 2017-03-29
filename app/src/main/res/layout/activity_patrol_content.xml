@@ -88,6 +88,7 @@
                             >
 
                             <TextView
+                                android:id="@+id/tv_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
@@ -97,11 +98,10 @@
                                 />
 
                             <TextView
-                                android:id="@+id/textView"
+                                android:id="@+id/tv_state"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
-                                android:text="@{model.state==0?@string/pre_start_patrol_state:(model.type==1?@string/start_patrol:@string/patrol_complete)}"
                                 tools:text="当前状态：已经到达西门口"
                                 tools:textColor="@color/colorPatrolGreen"/>
                         </LinearLayout>

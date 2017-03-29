@@ -127,7 +127,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
-                    android:text="林国定"
+                    android:text="@{user.name}"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
                     />
