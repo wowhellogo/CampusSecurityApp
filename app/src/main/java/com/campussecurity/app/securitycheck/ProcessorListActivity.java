@@ -14,7 +14,6 @@ import com.hao.common.nucleus.factory.RequiresPresenter;
 import com.hao.common.nucleus.presenter.LoadPresenter;
 import com.hao.common.rx.RESTResultTransformerList;
 import com.hao.common.rx.RxBus;
-
 /**
  * @Package com.campussecurity.app.securitycheck
  * @作 用:
@@ -56,7 +55,8 @@ public class ProcessorListActivity extends BaseLoadBindingActivity<ProcessorMode
         mAdapter.setItemEventHandler(this);
         schoolId = getIntent().getStringExtra("schoolId");
         position=getIntent().getIntExtra("position",-1);
-        getPresenter().loadList(RestDataSoure.newInstance().getSecurityTaskSet(schoolId).compose(new RESTResultTransformerList<ProcessorModel>()));
+        getPresenter().loadList(RestDataSoure.newInstance()
+                .getSecurityTaskSet(schoolId).compose(new RESTResultTransformerList<ProcessorModel>()));
     }
 
 

@@ -7,7 +7,6 @@ import com.campussecurity.app.main.model.IconModel;
 import com.campussecurity.app.message.SystemMessageActivity;
 import com.campussecurity.app.patrol.PatrolListActivity;
 import com.campussecurity.app.record.HistoryRecordActivity;
-import com.campussecurity.app.rfidjni.MainFNCActivity;
 import com.campussecurity.app.securitycheck.SecurityCheckListActivity;
 import com.hao.common.nucleus.presenter.RxPresenter;
 
@@ -83,14 +82,6 @@ public class MainPresenter extends RxPresenter<MainActivity> {
                 .builder()
         );
 
-
-        list.add(new IconModel.Builder()
-                .setName("NFC测试")
-                .setIcon(R.mipmap.ic_grid_message_history)
-                .setIconBg(R.mipmap.ic_grid_message_history_bg)
-                .setToActivity(MainFNCActivity.class)
-                .builder()
-        );
         return list;
     }
 

@@ -12,7 +12,6 @@ import com.hao.common.utils.DateUtils;
 import java.util.Date;
 
 
-
 /**
  * @Package com.campussecurity.app.patrol
  * @作 用:巡检点Adapter
