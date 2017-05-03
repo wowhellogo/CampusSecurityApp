@@ -21,7 +21,6 @@ import com.campussecurity.app.rfidjni.MainFncCardActivity;
 import com.campussecurity.app.rfidjni.TagIdEvent;
 import com.campussecurity.app.securitycheck.AddSecurityCheckActivity;
 import com.campussecurity.app.securitycheck.ProcessorEvent;
-import com.campussecurity.app.securitycheck.ProcessorListActivity;
 import com.hao.common.adapter.OnItemChildClickListener;
 import com.hao.common.base.BaseDataBindingActivity;
 import com.hao.common.manager.AppManager;
@@ -89,9 +88,9 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
                         //刷卡
                         mSwipeBackHelper.forward(MainFncCardActivity.newIntent(getContext(), position));
                         break;
-                    case R.id.tv_operation_manageer:
+                  /*  case R.id.tv_operation_manageer:
                         mSwipeBackHelper.forward(ProcessorListActivity.newIntent(getContext(), position, mPatrolTaskItemAdapter.getItem(position).getSchoolId() + ""));
-                        break;
+                        break;*/
                     case R.id.root_layout:
                         checkSecurity(position);
                         break;
@@ -274,16 +273,21 @@ public class PatrolContentActivity extends BaseDataBindingActivity<PatrolContent
 
     public void secrityException(int position) {
         PatrolTaskItemBean patrolTaskItemBean = mPatrolTaskItemAdapter.getItem(position);
-        if (patrolTaskItemBean.mProcessorModel == null) {
+        /*if (patrolTaskItemBean.mProcessorModel == null) {
             ToastUtil.show(getString(R.string.str_choose_processor));
             return;
-        }
-        mSwipeBackHelper.forward(AddSecurityCheckActivity.newItent(this, patrolTaskItemBean.mProcessorModel.getAccountGuid(), patrolTaskItemBean.getSchoolId() + "", patrolTaskItemBean.getPatrolsId() + ""));
+        }*/
+        mSwipeBackHelper.forward(AddSecurityCheckActivity.newItent(this, mUser.accountGuid, patrolTaskItemBean.getSchoolId() + "", patrolTaskItemBean.getPatrolsId() + ""));
     }
 
     private void showScaCard(int position, String code) {
         showLoadingDialog(R.string.scan_carding);
-        RestDataSoure.newInstance().scanCard(mUser.accountGuid, patrolTaskId, mPatrolTaskItemAdapter.getItem(position).getPatrolTaskItemId(), code).compose(RxUtil.applySchedulersJobUI()).compose(new RESTResultTransformBoolean()).compose(bindToLifecycle()).subscribe(aBoolean -> {
+        RestDataSoure.newInstance().scanCard(mUser.accountGuid, patrolTaskId, mPatrolTaskItemAdapter.getItem(position)
+                .getPatrolTaskItemId(), code)
+                .compose(RxUtil.applySchedulersJobUI())
+                .compose(new RESTResultTransformBoolean())
+                .compose(bindToLifecycle())
+                .subscribe(aBoolean -> {
             dismissLoadingDialog();
             mPatrolTaskItemAdapter.setRecord(position);
             onRefresh();

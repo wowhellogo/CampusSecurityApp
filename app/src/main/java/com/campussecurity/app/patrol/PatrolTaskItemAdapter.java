@@ -1,6 +1,7 @@
 package com.campussecurity.app.patrol;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.campussecurity.app.R;
 import com.campussecurity.app.patrol.model.PatrolTaskItemBean;
@@ -41,10 +42,6 @@ public class PatrolTaskItemAdapter extends BaseRecyclerViewAdapter<PatrolTaskIte
         if (model.getRecord() != null) {
             date = DateUtils.getStr2LDate(model.getRecord().getCreateDate());
         }
-        if(model.mProcessorModel!=null){
-            helper.setText(R.id.tv_operation_manageer, model.mProcessorModel.getName());
-        }
-
         if (position == 0) {
             helper.setText(R.id.tvName, model.getName() + mContext.getString(R.string.patrol_start));
             if (date != null)
@@ -65,9 +62,16 @@ public class PatrolTaskItemAdapter extends BaseRecyclerViewAdapter<PatrolTaskIte
         }
         if (position == 0)
             helper.setImageResource(R.id.im_flag, R.mipmap.ic_active_point);
+
+        if (null == model.getRecord()) {
+            helper.getView(R.id.tv_time_state).setVisibility(View.GONE);
+            helper.getView(R.id.tv_operation).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.tv_time_state).setVisibility(View.VISIBLE);
+            helper.getView(R.id.tv_operation).setVisibility(View.GONE);
+        }
         helper.setItemChildClickListener(R.id.tv_operation);
         helper.setItemChildClickListener(R.id.root_layout);
-        helper.setItemChildClickListener(R.id.tv_operation_manageer);
 
     }
 
